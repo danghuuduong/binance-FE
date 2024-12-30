@@ -22,12 +22,11 @@ const Candlestick: React.FC = () => {
     });
 
     // Lắng nghe sự kiện 'candlestick' từ backend và cập nhật state
-    socket.on('candlestick', (data: CandlestickData) => {
+    socket.on('candleStick-RealTime', (data: CandlestickData) => {
       setCandlestick(data);
       setLoading(false);
     });
 
-    // Cleanup khi component unmount
     return () => {
       socket.disconnect();
     };
