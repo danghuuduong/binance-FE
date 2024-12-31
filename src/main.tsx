@@ -1,10 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
 import App from "./App.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import CandlestickHistory from "./component/CandlestickHistory.tsx";
 import MainLayout from "./component/layout/MainLayout.tsx";
+import "././common/common.css";
+import "./index.css";
+import CandlestickHistory from "./component/page/candlesHistory/CandlestickHistory.tsx";
 
 const router = createBrowserRouter([
   {

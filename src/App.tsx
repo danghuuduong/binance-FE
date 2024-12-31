@@ -1,18 +1,10 @@
 import React from "react";
-import { Link } from "react-router";
-import Candlestick from "./component/Candlestick ";
-
+import Home from "./component/page/home/Home";
 const App: React.FC = () => {
   return (
-    <div>
-      <div>Home</div>
-      <div>
-        <Candlestick />
-      </div>
-      <div>
-        <Link to={`candlestickHistory`}>candlestickHistory</Link>
-      </div>
-    </div>
+    <>
+      <Home />
+    </>
   );
 };
 

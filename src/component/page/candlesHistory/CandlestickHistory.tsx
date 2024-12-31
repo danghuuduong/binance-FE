@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../api/axios";
+import api from "../../../api/axios";
 
 // Định nghĩa kiểu dữ liệu cho một cây nến
 interface CandlestickData {
