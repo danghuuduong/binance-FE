@@ -1,4 +1,7 @@
-/* Color Variables */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* index.css */
 :root {
   --color-sell: #f6465d;
   --color-textSell: #f6465d;
@@ -38,12 +41,10 @@
   --color-badgeBg: #2d2a20;
   --color-selectedBg: #1e2026;
   --color-gradientBrand: linear-gradient(180deg, #f8d12f 0%, #f0b90b 100%);
-  --color-gradientPrimary: linear-gradient(
-    295.27deg,
-    #15141a 0%,
-    #474d57 84.52%
-  );
-  --color-BasicBg: #181a20;
+  --color-gradientPrimary: linear-gradient(295.27deg,
+      #15141a 0%,
+      #474d57 84.52%);
+  --color-BasicBg: #5e6673;
   --color-SecondaryBg: #0b0e11;
   --color-Input: #2b3139;
   --color-InputLine: #474d57;
@@ -55,13 +56,14 @@
   --color-DisableText: #5e6673;
   --radii-xl: 16px;
 }
+
 body {
   background-color: var(--color-BasicBg);
   margin: 0px;
   padding: 0px;
   color: var(--color-textPrimary);
-  font-size: 12px;
 }
+
 .home {
   margin-top: 15px;
   padding: 0px 50px;
@@ -70,32 +72,23 @@ body {
 .text-primary {
   color: var(--color-primary);
 }
+
 .text-t-primary {
   color: var(--color-textPrimary) !important;
 }
+
 .text-success {
   color: var(--color-success);
 }
+
 .text-error {
   color: var(--color-error);
 }
+
 .text-gray {
   color: rgb(132, 142, 156);
 }
 
 .border-Line {
   border-color: var(--color-Line) !important;
-}
-.border {
-  border-width: 1px !important;
-}
-.border-solid {
-  border-style: solid !important;
-}
-.rounded-xl {
-  border-radius: var(--radii-xl) !important;
-}
-/* padding */
-.pd-15 {
-  padding: 15px;
 }

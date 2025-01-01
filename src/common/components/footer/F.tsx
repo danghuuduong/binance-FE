@@ -1,4 +1,4 @@
-import { NavLink } from "react-router"; // Ensure you are using the correct package
+import { NavLink } from "react-router-dom"; // Ensure you are using the correct package
 import "./header.css";
 const Header = (): JSX.Element => {
   const headerList = [

@@ -1,23 +1,22 @@
 import React from "react";
-import { DatePicker, version, Row, Col, Card } from "antd";
-import Candlestick from "./Candlestick ";
-import "./home.css";
+import Candlestick from "./Candlestick";
+import UserTrading from "./UserTrading";
 
 const Home: React.FC = () => {
   return (
     <div className="home">
-      <Row style={{ minHeight: 300 }}>
-        <Col span={8}>
-          <div className="home-card home-candlestick border-Line border border-solid rounded-xl pd-15">
+      <div className="grid grid-cols-12 gap-4">
+        <div className="col-span-4">
+          <div className="home-card home-candlestick border-Line border p-4 rounded-xl">
             <Candlestick />
           </div>
-        </Col>
-        <Col span={16}>
-          <div className="home-card border-Line border border-solid rounded-xl pd-15">
-            {/* <Candlestick /> */}
+        </div>
+        <div className="col-span-8">
+          <div className="home-card border-Line border p-4 rounded-xl">
+            <UserTrading />
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </div>
   );
 };
