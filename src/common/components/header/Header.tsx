@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./header.css";
-import { redirect, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const items = [
   {
@@ -8,17 +8,12 @@ const items = [
     key: "/",
   },
   {
-    label: "lịch sử chơi",
+    label: "Lịch sử chơi",
     key: "/candlestickHistory",
   },
   {
     label: "Liên hệ",
     key: "contact",
-    disabled: true,
-  },
-  {
-    label: "Avatart",
-    key: "profile",
     disabled: true,
   },
 ];
@@ -27,73 +22,62 @@ const Header = (): JSX.Element => {
   const [current, setCurrent] = useState("/");
   const navigate = useNavigate();
 
-  // const onClick = (e) => {
-  //   navigate(`${e.key}`);
-  //   setCurrent(e.key);
-  // };
+  const onClick = (key: string, isDisabled?: boolean) => {
+    if (!isDisabled) {
+      navigate(key);
+      setCurrent(key);
+    }
+  };
 
   return (
-
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
+    <nav className="border-gray-200 dark:bg-red-900 bg-[#181A20]">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
-        </a>
+        <div className="flex items-center space-x-3 rtl:space-x-reverse">
+          <img
+            src="https://pngimg.com/d/bitcoin_PNG7.png"
+            className="h-8"
+            alt="..."
+          />
+          <span className="self-center text-2xl font-semibold whitespace-nowrap text-yellowCT">
+            Tool Binance
+          </span>
+        </div>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <button type="button" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+          <button
+            type="button"
+            className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+          >
             <span className="sr-only">Open user menu</span>
-            <img className="w-8 h-8 rounded-full" src="https://scontent.fdad1-1.fna.fbcdn.net/v/t39.30808-6/277429058_1790446371293214_7381844266599254212_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=109&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=lgeHB0g3BbkQ7kNvgGVdGI5&_nc_oc=AdhILAbmehGWkn086wm5JJwsgRhxMbS3e6MEa7kB0BrCebwopOTbMkkej3QqUzRnoIQ&_nc_zt=23&_nc_ht=scontent.fdad1-1.fna&_nc_gid=AYda2MvCiH8ZKAevIYlA9pY&oh=00_AYBrTWemkn_C-0bD6Rry7lpYWlkYXUxZULCG1hhOO1Lyfg&oe=677B6767" alt="user photo" />
-          </button>
-          <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-            <div className="px-4 py-3">
-              <span className="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-              <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
-            </div>
-            <ul className="py-2" aria-labelledby="user-menu-button">
-              <li>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
-              </li>
-              <li>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
-              </li>
-              <li>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-              </li>
-              <li>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
-              </li>
-            </ul>
-          </div>
-          <button data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
-            <span className="sr-only">Open main menu</span>
-            <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
-            </svg>
+            <img
+              className="w-8 h-8 rounded-full"
+              src="https://scontent.fdad1-1.fna.fbcdn.net/v/t39.30808-6/277429058_1790446371293214_7381844266599254212_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=109&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=lgeHB0g3BbkQ7kNvgGVdGI5&_nc_oc=AdhILAbmehGWkn086wm5JJwsgRhxMbS3e6MEa7kB0BrCebwopOTbMkkej3QqUzRnoIQ&_nc_zt=23&_nc_ht=scontent.fdad1-1.fna&_nc_gid=AYda2MvCiH8ZKAevIYlA9pY&oh=00_AYBrTWemkn_C-0bD6Rry7lpYWlkYXUxZULCG1hhOO1Lyfg&oe=677B6767"
+              alt="avatar"
+            />
           </button>
         </div>
-        <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
-          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
-              <a href="#" className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page">Home</a>
-            </li>
-            <li>
-              <a href="#" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
-            </li>
-            <li>
-              <a href="#" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
-            </li>
-            <li>
-              <a href="#" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Pricing</a>
-            </li>
-            <li>
-              <a href="#" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
-            </li>
+
+        <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
+          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
+            {items.map((it) => {
+              const isActive = current === it.key ? "text-yellowCT" : "";
+              return (
+                <li key={it.key}>
+                  <a
+                    className={`block py-2 px-3  bg-blue-700 rounded md:bg-transparent ${
+                      it.disabled ? "text-grayTextCT" : isActive
+                    } md:p-0 md:dark:text-blue-500 cursor-pointer`}
+                    aria-current="page"
+                    onClick={() => onClick(it.key, it.disabled)} // Đảm bảo truyền key vào
+                  >
+                    {it.label}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
     </nav>
-
   );
 };
 

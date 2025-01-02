@@ -5,10 +5,12 @@ const MainLayout = () => {
   return (
     <>
       <Header />
-      <Outlet /> {/* Đây là nơi các route con sẽ được hiển thị */}
+      <div className="px-20">
+        <Outlet />
+      </div>
       <div>Footer</div>
     </>
   );
 };
 
-export default  MainLayout
+export default MainLayout;

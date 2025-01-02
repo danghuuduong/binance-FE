@@ -7,8 +7,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primaryCT: '#fcd535',
+        yellowCT: '#fcd535',
+        grayCT: '#181A20',
+        grayTextCT: '#848e9c',
+        arrayInButtonYellow: '#202630'
       },
+      
     },
   },
   plugins: [],
