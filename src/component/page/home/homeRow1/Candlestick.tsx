@@ -77,8 +77,8 @@ const Candlestick: React.FC = () => {
           </form>
         </div>
 
-        <div className="mt-3">
-          <span className="text-grayTextCT">BTC : </span>
+        <div className="mt-3 text-6xl font-medium ">
+          <span className="text-yellowCT text-5xl">BTC : </span>
           <span className="text-primary">
             {data?.closePrice ? formatNumber(data.closePrice) : "-"}
           </span>

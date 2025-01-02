@@ -22,7 +22,9 @@ const ToDayTrading: React.FC = () => {
         <div className="text-grayTextCT mg-t-15">
           Số lần vào lệnh hôm nay : <span className="text-white mg-l-5">1</span>
         </div>
+      </div>
 
+      <div >
         <button
           type="button"
           className="mt-4 

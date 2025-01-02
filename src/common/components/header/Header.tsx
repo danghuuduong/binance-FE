@@ -30,7 +30,7 @@ const Header = (): JSX.Element => {
   };
 
   return (
-    <nav className="border-gray-200 dark:bg-red-900 bg-[#181A20]">
+    <nav className="border-gray-200 bg-[#181A20]">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           <img
@@ -65,7 +65,7 @@ const Header = (): JSX.Element => {
                   <a
                     className={`block py-2 px-3  bg-blue-700 rounded md:bg-transparent ${
                       it.disabled ? "text-grayTextCT" : isActive
-                    } md:p-0 md:dark:text-blue-500 cursor-pointer`}
+                    } md:p-0  cursor-pointer`}
                     aria-current="page"
                     onClick={() => onClick(it.key, it.disabled)} // Đảm bảo truyền key vào
                   >
