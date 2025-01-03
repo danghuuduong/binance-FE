@@ -12,22 +12,21 @@ const Home: React.FC = () => {
       
       <div className="col-span-9">
         <div className="grid grid-cols-12 gap-2 ">
-          <div className="col-span-6 rounded-lg bg-grayCT p-4">
+          <div className="col-span-6 rounded-lg bg-grayCT py-4 pl-20">
             <Candlestick />
           </div>
           <div className="col-span-6 bg-grayCT rounded-lg p-4">
-          <HomeVolumeBarChart />
+            <HomeVolumeBarChart />
           </div>
         </div>
 
         <div className="grid grid-cols-12 gap-2 mt-2">
-          <div className=" bg-grayCT rounded-lg col-span-6 p-4">
-            
-            <HomeLineChart />
+          <div className=" bg-grayCT rounded-lg col-span-6 py-4 pl-20">
+          <ToDayTrading />
           </div>
 
           <div className=" bg-grayCT rounded-lg col-span-6 p-4">
-          <ToDayTrading />
+          <HomeLineChart />
           </div>
         </div>
 

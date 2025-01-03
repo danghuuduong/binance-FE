@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { TEChart } from "tw-elements-react";
-import { VolumI } from "../../../../interface/HomeI/candlestickDataI";
 import api from "../../../../api/axios";
-const homeVolumeBarChart: React.FC = () => {
+import { VolumI } from "../../../../interface/HomeI/candlestickDataI";
+
+const HomeVolumeBarChart: React.FC = () => {
   const [candles, setCandles] = useState<VolumI[]>([]); // Dữ liệu cây nến
 
   useEffect(() => {
@@ -18,18 +19,21 @@ const homeVolumeBarChart: React.FC = () => {
     };
 
     fetchCandles();
-    const intervalId = setInterval(fetchCandles, 60000); 
+    const intervalId = setInterval(fetchCandles, 60000);
     return () => clearInterval(intervalId);
-  }, []); 
+  }, []);
 
-  const dataVolumeAndPrices: { volumeData: number, volumeColor: string }[] = candles?.map((vl) => {
-    const volume = Number(vl.volume);
-    const volumeData = isNaN(volume) ? 0 : Math.round(Number(vl.volume) * 1000);
-    const volumeColor =
-      vl.close > vl.open ? "rgba(35, 108, 83, 1)" : "rgba(135, 48, 63, 1)";
+  const dataVolumeAndPrices: { volumeData: number; volumeColor: string }[] =
+    candles?.map((vl) => {
+      const volume = Number(vl.volume);
+      const volumeData = isNaN(volume)
+        ? 0
+        : Math.round(Number(vl.volume) * 1000);
+      const volumeColor =
+        vl.close > vl.open ? "rgba(35, 108, 83, 1)" : "rgba(135, 48, 63, 1)";
 
-    return { volumeData, volumeColor };
-  });
+      return { volumeData, volumeColor };
+    });
 
   return (
     <div className="">
@@ -42,7 +46,9 @@ const homeVolumeBarChart: React.FC = () => {
             {
               label: "Traffic",
               data: [...dataVolumeAndPrices.map((vl) => vl.volumeData)],
-              backgroundColor: [...dataVolumeAndPrices.map((vl) => vl.volumeColor)],
+              backgroundColor: [
+                ...dataVolumeAndPrices.map((vl) => vl.volumeColor),
+              ],
             },
           ],
         }}
@@ -51,4 +57,4 @@ const homeVolumeBarChart: React.FC = () => {
   );
 };
 
-export default homeVolumeBarChart;
+export default HomeVolumeBarChart;

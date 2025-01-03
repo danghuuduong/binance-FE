@@ -5,7 +5,7 @@ const MainLayout = () => {
   return (
     <>
       <Header />
-      <div className="px-20">
+      <div className="px-3 2xl:w-full mx-auto xxl:w-80%">
         <Outlet />
       </div>
       <div>Footer</div>

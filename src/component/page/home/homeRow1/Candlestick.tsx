@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import { CandlestickDataI } from "../../../../interface/HomeI/candlestickDataI";
 import { formatNumber } from "../../../../common/utils/abc";
+import Select from "../../../../common/components/select/select";
 
 const Candlestick: React.FC = () => {
   const [data, setData] = useState<CandlestickDataI | null>(null);
   const storedType = localStorage.getItem("candlestickType") || "1m";
   const [type, setType] = useState<string>(storedType);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [socket, setSocket] = useState<any | null>(null);
+  const [socket, setSocket] = useState<any>(null);
 
   useEffect(() => {
     const newSocket = io(import.meta.env.VITE_API_BASE_URL2, {
       withCredentials: true,
     });
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
 
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     newSocket && setSocket(newSocket);
@@ -55,26 +55,19 @@ const Candlestick: React.FC = () => {
     <div className="">
       <div className="text-2xl font-medium ">BTC/USDT </div>
       <div className="text-grayTextCT text-center mt-3">
-        {data?.closeTime ? `${data?.openTime} ---> ${data?.closeTime}` : "MM/DD/YYYY, 00:00:00 PM ---> MM/DD/YYYY, 00:00:00 PM"}
+        {data?.closeTime
+          ? `${data?.openTime} ---> ${data?.closeTime}`
+          : "MM/DD/YYYY, 00:00:00 PM ---> MM/DD/YYYY, 00:00:00 PM"}
       </div>
 
       <div>
         <div className="flex items-center  mt-4">
           <span className="text-grayTextCT">Time Span : </span>
-          <form className="max-w-sm ml-3">
-            <select
-              id="time-interval-select"
-              className="rounded-md px-1 bg-arrayInButtonYellow translate-y-0.5 border-none cursor-pointer"
-              value={type}
-              onChange={(e) => handleChange(e.target.value)}
-            >
-              {timeIntervals.map((interval) => (
-                <option key={interval} value={interval}>
-                  {interval}
-                </option>
-              ))}
-            </select>
-          </form>
+          <Select
+            options={timeIntervals}
+            value={type}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="mt-3 text-6xl font-medium ">
