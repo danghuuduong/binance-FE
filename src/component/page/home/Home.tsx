@@ -1,10 +1,9 @@
 import React from "react";
-import InfoUserTrading from "./homeRow1/InfoUserTrading";
-import ToDayTrading from "./homeRow1/ToDayTrading";
-import Candlestick from "./homeRow1/Candlestick";
-import HomeVolumeBarChart from "./homeRow2/homeVolumeBarChart";
-import HomeLineChart from "./homeRow2/homeLineChart";
-import HomeTopUSD from "./homeRow2/homeTopUSD";
+import Candlestick from "./homeRow1/BtcHome";
+import HomeVolumeBarChart from "./homeRow1/VolumeBarChartHome";
+import HomeLineChart from "./homeRow2/LineChartHome";
+import BXHTopHome from "./topBX/BXHTopHome";
+import StartTradingHome from "./homeRow2/StartTradingHome";
 
 const Home: React.FC = () => {
   return (
@@ -22,7 +21,7 @@ const Home: React.FC = () => {
 
         <div className="grid grid-cols-12 gap-2 mt-2">
           <div className=" bg-grayCT rounded-lg col-span-6 py-4 pl-20">
-          <ToDayTrading />
+          <StartTradingHome />
           </div>
 
           <div className=" bg-grayCT rounded-lg col-span-6 p-4">
@@ -34,7 +33,7 @@ const Home: React.FC = () => {
 
 
       <div className=" bg-grayCT rounded-lg col-span-3 p-4">
-        <HomeTopUSD />
+        <BXHTopHome />
       </div>
 
     </div>

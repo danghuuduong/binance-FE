@@ -3,7 +3,7 @@ import { TEChart } from "tw-elements-react";
 import api from "../../../../api/axios";
 import { VolumI } from "../../../../interface/HomeI/candlestickDataI";
 
-const HomeVolumeBarChart: React.FC = () => {
+const VolumeBarChartHome: React.FC = () => {
   const [candles, setCandles] = useState<VolumI[]>([]); // Dữ liệu cây nến
 
   useEffect(() => {
@@ -57,4 +57,4 @@ const HomeVolumeBarChart: React.FC = () => {
   );
 };
 
-export default HomeVolumeBarChart;
+export default VolumeBarChartHome;

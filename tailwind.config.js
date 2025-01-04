@@ -8,7 +8,7 @@ export default {
         grayCT: "#181A20",  //item card,
         grayBody: "#0a0d10",  //item body,
         grayTextCT: "#848e9c", //trong table,
-        arrayInButtonYellow: "#202630",
+        grayInButtonYellow: "#202630",
         whiteCT: "#eaecef",
       },
       screens: {

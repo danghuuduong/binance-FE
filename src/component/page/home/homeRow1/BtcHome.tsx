@@ -4,7 +4,7 @@ import { CandlestickDataI } from "../../../../interface/HomeI/candlestickDataI";
 import { formatNumber } from "../../../../common/utils/abc";
 import Select from "../../../../common/components/select/select";
 
-const Candlestick: React.FC = () => {
+const BtcHome: React.FC = () => {
   const [data, setData] = useState<CandlestickDataI | null>(null);
   const storedType = localStorage.getItem("candlestickType") || "1m";
   const [type, setType] = useState<string>(storedType);
@@ -117,4 +117,4 @@ const Candlestick: React.FC = () => {
   );
 };
 
-export default Candlestick;
+export default BtcHome;

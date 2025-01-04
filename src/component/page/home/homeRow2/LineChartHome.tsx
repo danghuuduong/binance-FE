@@ -2,7 +2,7 @@ import React from "react";
 import { TEChart } from "tw-elements-react";
 
 
-const HomeLineChart: React.FC = () => {
+const LineChartHome: React.FC = () => {
     return (
         <div className="">
             <div className="text-2xl font-medium ">The amount changes</div>
@@ -44,4 +44,4 @@ const HomeLineChart: React.FC = () => {
     );
 }
 
-export default HomeLineChart
+export default LineChartHome

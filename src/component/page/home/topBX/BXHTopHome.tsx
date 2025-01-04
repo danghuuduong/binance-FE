@@ -1,7 +1,7 @@
 import React from "react";
-import InfoUserTrading from "../homeRow1/InfoUserTrading";
+import InfoUserTrading from "./InfoUserTrading";
 
-const HomeTopUSD: React.FC = () => {
+const BXHTopHome: React.FC = () => {
   const userList = [
     {
       id: 1,
@@ -111,4 +111,4 @@ const HomeTopUSD: React.FC = () => {
   );
 };
 
-export default HomeTopUSD;
+export default BXHTopHome;
