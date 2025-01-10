@@ -104,7 +104,7 @@ const BXHTopHome: React.FC = () => {
           </table>
         </div>
       </div>
-      <div className="col-span-4 bg-grayCT rounded-lg p-4  border-grayTextCT border-[1px] mt-4">
+      <div className="col-span-4 bg-grayCT rounded-lg p-4  border-borderCT border-[1px] mt-4">
         <InfoUserTrading />
       </div>
     </div>

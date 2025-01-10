@@ -169,7 +169,7 @@ const StartTradingHome: React.FC = () => {
                     Thếp đang chạy :<span className="text-red-500 mg-l-5">1</span>/
                     <span className="text-green-500">6</span>
                   </div>
-                  <div className="mt-4  p-2 rounded-lg border-grayTextCT border-[1px]">
+                  <div className="mt-4  p-2 rounded-lg border-borderCT border-[1px]">
                     <div> <div className="text-red-500 mr-2 font-[700]"> * Lưu ý :
                     </div>- khi "STOP" sẽ tự động ngắt như sau : </div>
                     <div className="ml-6"> + khi "THẮNG" lệnh</div>

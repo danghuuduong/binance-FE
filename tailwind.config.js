@@ -10,6 +10,7 @@ export default {
         grayTextCT: "#848e9c", //trong table,
         grayInButtonYellow: "#202630",
         whiteCT: "#eaecef",
+        borderCT:"#5E6673"
       },
       screens: {
         xxl: "2000px", // Thêm breakpoint cho 2000px
