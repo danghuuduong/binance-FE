@@ -7,6 +7,7 @@ interface CandlestickDataI {
   volume: string;
   closeTime: string;
   type: string;
+  statusTrading?: string
 }
 
 interface SocketMessageI {

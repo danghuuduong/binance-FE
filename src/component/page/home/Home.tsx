@@ -3,7 +3,7 @@ import Candlestick from "./homeRow1/BtcHome";
 import HomeVolumeBarChart from "./homeRow1/VolumeBarChartHome";
 import HomeLineChart from "./homeRow2/LineChartHome";
 import BXHTopHome from "./topBX/BXHTopHome";
-import StartTradingHome from "./homeRow2/StartTradingHome";
+import StartTradingHome from "./homeRow2/startTradingHome/StartTradingHome";
 
 const Home: React.FC = () => {
   return (

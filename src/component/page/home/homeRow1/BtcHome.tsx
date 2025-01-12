@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import { CandlestickDataI } from "../../../../interface/HomeI/candlestickDataI";
 import { formatNumber } from "../../../../common/utils/abc";
-import Select from "../../../../common/components/select/select";
+import Select from "../../../../common/components/select/Select";
 
 const BtcHome: React.FC = () => {
   const [data, setData] = useState<CandlestickDataI | null>(null);
+  console.log("🚀 ~ data:", data)
   const storedType = localStorage.getItem("candlestickType") || "1m";
   const [type, setType] = useState<string>(storedType);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -111,6 +112,10 @@ const BtcHome: React.FC = () => {
         <div className="mt-3">
           <span className="text-grayTextCT">Type api : </span>
           <span>{data?.type || "-"}</span>
+
+          <span className="text-grayTextCT ml-10">statusTrading : </span>
+          <span>{`${data?.statusTrading}`}</span>
+
         </div>
       </div>
     </div>

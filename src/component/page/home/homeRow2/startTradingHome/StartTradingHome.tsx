@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Select from "../../../../common/components/select/select";
-import Modal from "../../../../common/components/modal/Modal";
+import Select from "../../../../../common/components/select/Select";
+import Modal from "../../../../../common/components/modal/Modal";
+import ModalStartTradingHome from "./modalStartTradingHome";
+import api from "../../../../../api/axios";
 
 const optionsChicken: string[] = ["10", "20", "30"];
 
@@ -18,11 +20,6 @@ const StartTradingHome: React.FC = () => {
     setUsd("1000");
   }, []);
 
-
-  useEffect(() => {
-    // setisWaiting(false)
-  }, []);
-
   const handleChange = (chicken: string) => {
     localStorage.setItem("chickenType", chicken);
     setChicken(chicken);
@@ -36,12 +33,38 @@ const StartTradingHome: React.FC = () => {
     setIsModal(false);
     setIsTrade(!isTrade)
     if (isTrade) {
-      setIsTrade(false)
       setisWaiting(true)
+      handleStopTrading()
     } else {
-      setIsTrade(true)
+      handleStartTrading()
     }
   };
+
+  const handleStartTrading = async () => {
+    try {
+      const response = await api.post("status/start-trading");
+      console.log("🚀 ~ handleStartTrading ~ response:", response)
+      if (response?.status === 201) {
+        setIsTrade(true)
+      }
+    } catch (error) {
+      setIsTrade(false)
+      console.log("Error volume data:", error);
+    }
+  }
+
+  const handleStopTrading = async () => {
+    try {
+      const response = await api.post("status/stop-trading");
+      console.log("🚀 ~ handleStartTrading ~ response:", response)
+      if (response?.status === 201) {
+        setIsTrade(false)
+      }
+    } catch (error) {
+      console.log("Error volume data:", error);
+    }
+  }
+
 
   const percentUSDT = (Number(usd) / 100) * Number(chickenType) || 0; // Số tiền sẽ cư
 
@@ -158,44 +181,10 @@ const StartTradingHome: React.FC = () => {
           closeModal={closeModal}
           confirmModal={confirmModal}
           title={isTrade ? "Bạn muốn STOP Trading ?" : "Bạn có chắc chắn Start Trading ?"}
-          classCT = {isTrade ? "bg-red-600" : "bg-yellowCT text-gray-600"}
+          classCT={isTrade ? "bg-red-600" : "bg-yellowCT text-gray-600"}
           textOK={isTrade ? "STOP" : "START"}
         >
-          <>
-            {
-              isTrade ?
-                <div className="text-grayTextCT">
-                  <div className="text-grayTextCT">
-                    Thếp đang chạy :<span className="text-red-500 mg-l-5">1</span>/
-                    <span className="text-green-500">6</span>
-                  </div>
-                  <div className="mt-4  p-2 rounded-lg border-borderCT border-[1px]">
-                    <div> <div className="text-red-500 mr-2 font-[700]"> * Lưu ý :
-                    </div>- khi "STOP" sẽ tự động ngắt như sau : </div>
-                    <div className="ml-6"> + khi "THẮNG" lệnh</div>
-                    <div className="ml-6"> + Hoàn thành 6/6 </div>
-                    <div className="ml-6"> + 0/6 ( Chưa kịp vào lệnh) </div>
-
-                  </div>
-
-
-                </div>
-                :
-                <div>
-                  <div>
-                    <span className="text-grayTextCT">Lựa chọn của bạn là : </span>
-                    <span className="text-whiteCT ml-2">{chicken} %</span>
-                  </div>
-
-                  <div>
-                    <span className="text-grayTextCT">Số tiền Trading ( Gà ) : </span>
-                    <span className="text-whiteCT ml-2">{percentUSDT} $</span>
-                  </div>
-
-                </div>
-            }
-          </>
-
+          <ModalStartTradingHome isTrade={isTrade} chicken={chicken} percentUSDT={percentUSDT} />
         </Modal>
       }
     </>
