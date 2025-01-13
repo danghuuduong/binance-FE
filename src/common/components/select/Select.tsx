@@ -12,7 +12,7 @@ const Select: React.FC<SelectProps> = ({ options, value, onChange, cl, disabled 
       <select
         disabled={disabled}
         id="time-interval-select"
-        className={`rounded-md px-1 bg-slate-500 translate-y-0.5 border-none cursor-pointer ${cl} text-whiteCT`}
+        className={`rounded-md px-1 focus:outline-none bg-slate-500 translate-y-0.5 border-none cursor-pointer ${cl} text-whiteCT`}
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >

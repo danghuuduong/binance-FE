@@ -3,16 +3,18 @@ import io from "socket.io-client";
 import { CandlestickDataI } from "../../../../interface/HomeI/candlestickDataI";
 import { formatNumber } from "../../../../common/utils/abc";
 import Select from "../../../../common/components/select/Select";
+import LoadDingPage from "../../../../common/components/loadingPage/LoadingPage";
 
 const BtcHome: React.FC = () => {
   const [data, setData] = useState<CandlestickDataI | null>(null);
-  console.log("🚀 ~ data:", data)
   const storedType = localStorage.getItem("candlestickType") || "1m";
   const [type, setType] = useState<string>(storedType);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [socket, setSocket] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const newSocket = io(import.meta.env.VITE_API_BASE_URL2, {
       withCredentials: true,
     });
@@ -20,7 +22,10 @@ const BtcHome: React.FC = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     newSocket && setSocket(newSocket);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    newSocket.on("candleStick-RealTime", (data: any) => setData(data));
+    newSocket.on("candleStick-RealTime", (data: any) => {
+      setIsLoading(false);
+      setData(data);
+    });
     return () => {
       localStorage.removeItem("candlestickType");
       newSocket.disconnect();
@@ -28,6 +33,7 @@ const BtcHome: React.FC = () => {
   }, []);
 
   const handleChange = (value: string) => {
+    setIsLoading(true);
     setType(value);
     setData(null);
     localStorage.setItem("candlestickType", value);
@@ -53,72 +59,74 @@ const BtcHome: React.FC = () => {
   ];
 
   return (
-    <div className="">
-      <div className="text-2xl font-medium ">BTC/USDT </div>
-      <div className="text-grayTextCT text-center mt-3">
-        {data?.closeTime
-          ? `${data?.openTime} ---> ${data?.closeTime}`
-          : "MM/DD/YYYY, 00:00:00 PM ---> MM/DD/YYYY, 00:00:00 PM"}
+    <>
+      {isLoading && <LoadDingPage />}
+      <div className="">
+        <div className="text-2xl font-medium ">BTC/USDT </div>
+        <div className="text-grayTextCT text-center mt-3">
+          {data?.closeTime
+            ? `${data?.openTime} ---> ${data?.closeTime}`
+            : "MM/DD/YYYY, 00:00:00 PM ---> MM/DD/YYYY, 00:00:00 PM"}
+        </div>
+
+        <div>
+          <div className="flex items-center  mt-4">
+            <span className="text-grayTextCT">Time Span : </span>
+            <Select
+              options={timeIntervals}
+              value={type}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="mt-3 text-6xl font-medium ">
+            <span className="text-yellowCT text-5xl">BTC : </span>
+            <span className="text-primary">
+              {data?.closePrice ? formatNumber(data.closePrice) : "-"}
+            </span>
+          </div>
+          <div className="mt-3">
+            <span className="text-grayTextCT">OpenPrice (O) : </span>
+            <span className="text-green-500">
+              {data?.highPrice ? formatNumber(data.openPrice) : "-"}
+            </span>
+          </div>
+
+          <div className="mt-3">
+            <span className="text-grayTextCT">HighPrice (H) : </span>
+            <span className="text-red-500">
+              {data?.lowPrice ? formatNumber(data.highPrice) : "-"}
+            </span>
+          </div>
+
+          <div className="mt-3">
+            <span className="text-grayTextCT">LowPrice (L) : </span>
+            <span className="text-red-500">
+              {data?.lowPrice ? formatNumber(data.lowPrice) : "-"}
+            </span>
+          </div>
+
+          <div className="mt-3">
+            <span className="text-grayTextCT">ClosePrice (C) : </span>
+            <span className="text-red-500">
+              {data?.lowPrice ? formatNumber(data.closePrice) : "-"}
+            </span>
+          </div>
+
+          <div className="mt-3">
+            <span className="text-grayTextCT">Volume : </span>
+            <span>{data?.volume || "-"}</span>
+          </div>
+          <div className="mt-3">
+            <span className="text-grayTextCT">Type api : </span>
+            <span>{data?.type || "-"}</span>
+
+            <span className="text-grayTextCT ml-10">Status Trading : </span>
+            <span>{`${data?.statusTrading}`}</span>
+          </div>
+        </div>
       </div>
-
-      <div>
-        <div className="flex items-center  mt-4">
-          <span className="text-grayTextCT">Time Span : </span>
-          <Select
-            options={timeIntervals}
-            value={type}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="mt-3 text-6xl font-medium ">
-          <span className="text-yellowCT text-5xl">BTC : </span>
-          <span className="text-primary">
-            {data?.closePrice ? formatNumber(data.closePrice) : "-"}
-          </span>
-        </div>
-        <div className="mt-3">
-          <span className="text-grayTextCT">OpenPrice (O) : </span>
-          <span className="text-green-500">
-            {data?.highPrice ? formatNumber(data.openPrice) : "-"}
-          </span>
-        </div>
-
-        <div className="mt-3">
-          <span className="text-grayTextCT">HighPrice (H) : </span>
-          <span className="text-red-500">
-            {data?.lowPrice ? formatNumber(data.highPrice) : "-"}
-          </span>
-        </div>
-
-        <div className="mt-3">
-          <span className="text-grayTextCT">LowPrice (L) : </span>
-          <span className="text-red-500">
-            {data?.lowPrice ? formatNumber(data.lowPrice) : "-"}
-          </span>
-        </div>
-
-        <div className="mt-3">
-          <span className="text-grayTextCT">ClosePrice (C) : </span>
-          <span className="text-red-500">
-            {data?.lowPrice ? formatNumber(data.closePrice) : "-"}
-          </span>
-        </div>
-
-        <div className="mt-3">
-          <span className="text-grayTextCT">Volume : </span>
-          <span>{data?.volume || "-"}</span>
-        </div>
-        <div className="mt-3">
-          <span className="text-grayTextCT">Type api : </span>
-          <span>{data?.type || "-"}</span>
-
-          <span className="text-grayTextCT ml-10">statusTrading : </span>
-          <span>{`${data?.statusTrading}`}</span>
-
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 
