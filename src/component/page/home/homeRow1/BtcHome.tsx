@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
+import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import { CandlestickDataI } from "../../../../interface/HomeI/candlestickDataI";
 import { formatNumber } from "../../../../common/utils/abc";
@@ -15,6 +16,8 @@ const BtcHome: React.FC = () => {
 
   useEffect(() => {
     setIsLoading(true);
+    console.log("vo day");
+    
     const newSocket = io(import.meta.env.VITE_API_BASE_URL2, {
       withCredentials: true,
     });

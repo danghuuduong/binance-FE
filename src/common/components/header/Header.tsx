@@ -50,7 +50,7 @@ const Header = (): JSX.Element => {
             <span className="sr-only">Open user menu</span>
             <img
               className="w-8 h-8 rounded-full"
-              src="https://scontent.fdad1-1.fna.fbcdn.net/v/t39.30808-6/277429058_1790446371293214_7381844266599254212_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=109&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=lgeHB0g3BbkQ7kNvgGVdGI5&_nc_oc=AdhILAbmehGWkn086wm5JJwsgRhxMbS3e6MEa7kB0BrCebwopOTbMkkej3QqUzRnoIQ&_nc_zt=23&_nc_ht=scontent.fdad1-1.fna&_nc_gid=AYda2MvCiH8ZKAevIYlA9pY&oh=00_AYBrTWemkn_C-0bD6Rry7lpYWlkYXUxZULCG1hhOO1Lyfg&oe=677B6767"
+              src="https://png.pngtree.com/background/20230517/original/pngtree-4k-girl-wallpaper-anime-picture-image_2639714.jpg"
               alt="avatar"
             />
           </button>
