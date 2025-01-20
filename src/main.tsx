@@ -9,6 +9,7 @@ import CandlestickHistory from "./component/page/candlesHistory/CandlestickHisto
 import {
   createBrowserRouter, RouterProvider,
 } from "react-router-dom";
+import { ContextWrap } from "./useContext/FoodContext.tsx";
 
 
 const router = createBrowserRouter([
@@ -33,6 +34,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ContextWrap>
+      <RouterProvider router={router} />
+    </ContextWrap>
   </StrictMode>
 );

@@ -16,8 +16,6 @@ const BtcHome: React.FC = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    console.log("vo day");
-    
     const newSocket = io(import.meta.env.VITE_API_BASE_URL2, {
       withCredentials: true,
     });

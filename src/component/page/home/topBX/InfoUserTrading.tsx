@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import api from "../../../../api/axios";
+import LoadDingPage from "../../../../common/components/loadingPage/LoadingPage";
 
 interface User {
   name: string;
@@ -13,16 +14,20 @@ interface User {
 
 const InfoUserTrading: React.FC = () => {
   const [data, setData] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
-    // Hàm gọi API
     const fetchCandles = async () => {
+      setIsLoading(true)
       try {
         const response = await api.get("/users");
         if (response?.status == 200) {
           setData(response?.data)
+          setIsLoading(false)
         }
       } catch (error) {
+        setIsLoading(false)
         console.log("Error fetching candlestick data:", error);
       }
     };
@@ -33,7 +38,8 @@ const InfoUserTrading: React.FC = () => {
   const userDetail = data?.length > 0 ? data[0] : null;
 
   return (
-    <div className="">
+    <>
+      {isLoading && <LoadDingPage />}
       <div className="text-2xl font-medium "> Thông tin ủa bạn</div>
       <div className="">
         <div className="text-grayTextCT mt-3">
@@ -58,7 +64,7 @@ const InfoUserTrading: React.FC = () => {
           Tổng vào lệnh: <span className="text-white mg-l-5">{userDetail?.totalOrders } </span>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
