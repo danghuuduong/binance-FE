@@ -1,11 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { TEChart } from "tw-elements-react";
-import ThemeContext from "../../../../useContext/FoodContext";
 
 
 const LineChartHome: React.FC = () => {
-    const theme = useContext(ThemeContext);
-    console.log("🚀 ~ theme:", theme)
     return (
         <div className="">
             <div className="text-2xl font-medium ">The amount changes</div>

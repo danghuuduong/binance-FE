@@ -6,11 +6,18 @@ import api from "../../../../../api/axios";
 import Button from "../../../../../common/components/button/Button";
 import IconLoading from "../../../../../common/components/iconLoading/IconLoading";
 import LoadDingPage from "../../../../../common/components/loadingPage/LoadingPage";
+import { handleParseInt } from "../../../../../common/utils/handleParseInt";
 
 const optionsChicken: string[] = ["10", "20", "30"];
 
+interface Data {
+  USDT: {
+    total: number;
+  };
+}
+
 const StartTradingHome: React.FC = () => {
-  const [usd, setUsd] = useState<string>("-"); // USDT hiện tại
+  const [data, setData] = useState<Data | null>(null); // USDT hiện tại
   const chickenType = localStorage.getItem("chickenType") || "10"; // %
   const [chicken, setChicken] = useState<string>(chickenType); // Số tiền sẽ cư
   const [isTrade, setIsTrade] = useState<boolean>(false); // Bắt đầu trading
@@ -20,19 +27,16 @@ const StartTradingHome: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    // call api getthongtin
-    setUsd("1000");
-  }, []);
+  console.log("🚀 ~ data ~ :", data);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true); // Bắt đầu loading
+      // setIsLoading(true); // Bắt đầu loading
       try {
-        const response = await api.get("/status/status-trading"); // Thay đường dẫn API của bạn vào đây
-        // console.log("🚀 ~ fetchData ~ :");
-        // if (response.status === 200) {
-        // }
+        const response = await api.get("/my-infomation"); // Thay đường dẫn API của bạn vào đây
+        if (response?.status === 200) {
+          setData(response?.data);
+        }
       } catch (err) {
         console.error("🚀 ~ useEffect ~ error:", err);
       } finally {
@@ -89,21 +93,24 @@ const StartTradingHome: React.FC = () => {
       console.log("Error volume data:", error);
     }
   };
-
-  const percentUSDT = (Number(usd) / 100) * Number(chickenType) || 0; // Số tiền sẽ cư
+  const percentUSDT =
+    (Number(data?.USDT?.total) / 100) * Number(chickenType) || 0; // Số tiền sẽ cư
 
   return (
     <>
       {isLoading && <LoadDingPage />}
       <div>
-        <div className="text-2xl font-medium "> Bắt Đầu Trading tool</div>
-        <div>
+        <div className="text-2xl font-medium text-center "> Bắt Đầu Trading tool</div>
+        <div className="mt-12">
           <div className="text-grayTextCT mt-3">
-            USD <span className="text-primary">{usd} $</span>
+            Số dư khả dụng{" "}
+            <span className="text-whiteCT">
+              {handleParseInt(data?.USDT?.total)} USD
+            </span>
           </div>
 
           <div className="text-grayTextCT mt-3 flex items-center">
-            <span className=""> Lựa chọn số tiền Trade</span>
+            <span className=""> Tiền Trade</span>
             <Select
               options={optionsChicken}
               value={chicken}
@@ -114,9 +121,9 @@ const StartTradingHome: React.FC = () => {
           </div>
 
           <div className="text-grayTextCT mt-1 flex items-center">
-            Số tiền được Trade ( Gà ) :
+            Số tiền Trade ( Gà ) :
             <span className="text-yellowCT text-[32px] font-medium ml-4">
-              {percentUSDT}
+              {handleParseInt(percentUSDT)}
             </span>
           </div>
 

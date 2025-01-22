@@ -21,6 +21,7 @@ const Button: FunctionComponent<ButtonProps> = ({
       disabled={disabled}
       onClick={onClick}
       className={`
+        w-full 
         hover:scale-105 
         duration-300 
         ease-in-out
@@ -32,6 +33,7 @@ const Button: FunctionComponent<ButtonProps> = ({
         focus:outline-none 
         bg-blue-700 
         flex items-center
+        justify-center
         ${classCT}
       `}
     >

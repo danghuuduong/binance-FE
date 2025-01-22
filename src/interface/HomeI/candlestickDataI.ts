@@ -7,7 +7,7 @@ interface CandlestickDataI {
   volume: string;
   closeTime: string;
   type: string;
-  statusTrading?: string
+  statusTrading?: string;
 }
 
 interface SocketMessageI {
@@ -19,13 +19,4 @@ interface SocketMessageI {
   type: string;
 }
 
-interface VolumI {
-  open: string;
-  close: string;
-  high: string;
-  low: string;
-  volume: string;
-  timestamp: string;
-}
-
-export type { CandlestickDataI, SocketMessageI, VolumI };
+export type { CandlestickDataI, SocketMessageI };
