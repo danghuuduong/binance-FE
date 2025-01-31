@@ -9,7 +9,7 @@ import CandlestickHistory from "./component/page/candlesHistory/CandlestickHisto
 import {
   createBrowserRouter, RouterProvider,
 } from "react-router-dom";
-import { ContextWrap } from "./useContext/FoodContext.tsx";
+import { ContextWrap } from "./context/FoodContext.tsx";
 
 
 const router = createBrowserRouter([

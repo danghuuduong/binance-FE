@@ -8,4 +8,11 @@ interface FoodContextI {
 interface FoodProviderPropsI {
   children: ReactNode;
 }
-export type { FoodContextI,FoodProviderPropsI };
+
+interface IFetchFeesApi002 {
+  HEADER: unknown;
+  DATA: unknown;
+  sapError?: boolean;
+}
+
+export type { FoodContextI, FoodProviderPropsI, IFetchFeesApi002 };
