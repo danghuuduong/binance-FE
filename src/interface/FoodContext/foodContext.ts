@@ -1,8 +1,16 @@
 import { ReactNode } from "react";
 
+interface DataMount {
+  _id: string;
+  history: string[];
+  largest: string;
+  __v: number | string;
+}
+
 interface FoodContextI {
-  isLoading: boolean;
-  setLoading: (isLoading: boolean) => void;
+  dataMount?: DataMount  | null;
+  isLoadingMount?: boolean;
+  fetchAmountData?: () => void;
 }
 
 interface FoodProviderPropsI {
@@ -15,4 +23,4 @@ interface IFetchFeesApi002 {
   sapError?: boolean;
 }
 
-export type { FoodContextI, FoodProviderPropsI, IFetchFeesApi002 };
+export type { FoodContextI, FoodProviderPropsI, IFetchFeesApi002, DataMount };

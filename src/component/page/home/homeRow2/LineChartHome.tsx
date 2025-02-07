@@ -1,47 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
 import { TEChart } from "tw-elements-react";
-
+import ThemeContext from "../../../../context/FoodContext";
+import { handleParseFloat2 } from "../../../../common/utils/handleParseInt";
 
 const LineChartHome: React.FC = () => {
-    return (
-        <div className="">
-            <div className="text-2xl font-medium ">The amount changes</div>
-            <TEChart
-                type="line"
-                data={{
-                    labels: [
-                        "1032 $",
-                        "1132 $",
-                        "1062 $",
-                        "1232 $",
-                        "1432 $",
-                        "8/1",
-                        "9/1",
-                        "9/1",
-                        "9/1",
-                        "9/1",
-                        "9/1",
-                        "9/1",
-                        "9/1",
-                        "9/1",
-                        "9/1",
-                        "9/1",
-                        "9/1",
-                        "9/1",
-                        "9/1",
-                        "9/1",
-                        "9/1",
-                    ],
-                    datasets: [
-                        {
-                            label: "Traffic",
-                            data: [1032, 1132, 1062, 1232, 1432, 1132, 1032, 1032, 1132, 1062, 1232, 1432, 1132, 1032, 1032, 1132, 1062, 1232, 2432, 1132, 1032],
-                        },
-                    ],
-                }}
-            />
-        </div>
-    );
-}
+  const { dataMount } = useContext(ThemeContext);
+  const historyList = dataMount?.history;
+  const labels = historyList?.map((item) => `${handleParseFloat2(item,0) } $`) || [];
+  const data = historyList?.map((value) => parseInt(`${handleParseFloat2(value,0)}`, 10)) || []
 
-export default LineChartHome
+  console.log("🚀 ~ data:", data)
+  return (
+    <div className="">
+      <div className="text-2xl font-medium ">The amount changes</div>
+      <TEChart
+        type="line"
+        data={{
+          labels: labels,
+          datasets: [
+            {
+              label: `Số tiền lớn nhất ${handleParseFloat2(dataMount?.largest)} $`,
+              data: data,
+            },
+          ],
+        }}
+      />
+    </div>
+  );
+};
+
+export default LineChartHome;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Select from "../../../../../common/components/select/Select";
 import Modal from "../../../../../common/components/modal/Modal";
 import ModalStartTradingHome from "./ModalStartTradingHome";
@@ -6,45 +6,40 @@ import api from "../../../../../api/axios";
 import Button from "../../../../../common/components/button/Button";
 import IconLoading from "../../../../../common/components/iconLoading/IconLoading";
 import LoadDingPage from "../../../../../common/components/loadingPage/LoadingPage";
-import { handleParseInt } from "../../../../../common/utils/handleParseInt";
+import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
+import { dataUSDI } from "../../../../../interface/HomeI/StartTradingHomeI/StartTradingHomeType";
+import ThemeContext from "../../../../../context/FoodContext";
 
 const optionsChicken: string[] = ["10", "20", "30"];
 
-interface Data {
-  USDT: {
-    total: number;
-  };
-}
-
 const StartTradingHome: React.FC = () => {
-  const [data, setData] = useState<Data | null>(null); // USDT hiện tại
+  const [dataUSD, setDataUSD] = useState<dataUSDI | null>(null); // USDT hiện tại
   const chickenType = localStorage.getItem("chickenType") || "10"; // %
-  const [chicken, setChicken] = useState<string>(chickenType); // Số tiền sẽ cư
+  const [chicken, setChicken] = useState<string>(chickenType); // Số tiền sẽ cươc
   const [isTrade, setIsTrade] = useState<boolean>(false); // Bắt đầu trading
   const [isModal, setIsModal] = useState(false);
 
   const [isWaitingForCompletion, setisWaiting] = useState<boolean>(false); // Chờ để kết thúc lệnh
-
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log("🚀 ~ data ~ :", data);
+  const { dataMount } = useContext(ThemeContext);
+  const largest = dataMount?.largest;
 
   useEffect(() => {
     const fetchData = async () => {
-      // setIsLoading(true); // Bắt đầu loading
+      setIsLoading(true);
       try {
-        const response = await api.get("/my-infomation"); // Thay đường dẫn API của bạn vào đây
+        const response = await api.get("/my-infomation");
         if (response?.status === 200) {
-          setData(response?.data);
+          setDataUSD(response?.data);
         }
       } catch (err) {
         console.error("🚀 ~ useEffect ~ error:", err);
       } finally {
-        setIsLoading(false); // Dừng loading khi kết thúc
+        setIsLoading(false);
       }
     };
     fetchData();
-  }, []); // Chạy khi component mount
+  }, []);
 
   const handleChange = (chicken: string) => {
     localStorage.setItem("chickenType", chicken);
@@ -94,46 +89,52 @@ const StartTradingHome: React.FC = () => {
     }
   };
   const percentUSDT =
-    (Number(data?.USDT?.total) / 100) * Number(chickenType) || 0; // Số tiền sẽ cư
+    (Number(largest) / 100) * Number(chickenType) || 0; // Số tiền sẽ cược
+  console.log("🚀 ~ dataUSD?.USDT?.total:", dataUSD?.USDT?.total);
 
   return (
     <>
       {isLoading && <LoadDingPage />}
       <div>
-        <div className="text-2xl font-medium text-center "> Bắt Đầu Trading tool</div>
+        <div className="text-2xl font-medium text-center ">
+          Bắt Đầu Trading tool
+        </div>
         <div className="mt-12">
           <div className="text-grayTextCT mt-3">
-            Số dư khả dụng{" "}
-            <span className="text-whiteCT">
-              {handleParseInt(data?.USDT?.total)} USD
+            Số dư khả dụng :
+            <span className="text-whiteCT ml-2">
+              {handleParseFloat2(dataUSD?.USDT?.total)} USD
             </span>
           </div>
 
-          <div className="text-grayTextCT mt-3 flex items-center">
-            <span className=""> Tiền Trade</span>
-            <Select
-              options={optionsChicken}
-              value={chicken}
-              onChange={handleChange}
-              disabled={isTrade || isWaitingForCompletion}
-            />
-            <span className="ml-2 text-whiteCT font-medium">%</span>
+          <div className="border-2 border-[#3d3d3d] mt-3 p-3">
+            <div className="text-grayTextCT mt-3">
+              Số Tiền lớn nhất :
+              <span className="text-whiteCT ml-2">
+                {handleParseFloat2(largest)} USD
+              </span>
+            </div>
+
+            <div className="text-grayTextCT mt-3 flex items-center">
+              <span> Tiền Trade :</span>
+              <Select
+                options={optionsChicken}
+                value={chicken}
+                onChange={handleChange}
+                disabled={isTrade || isWaitingForCompletion}
+              />
+              <span className="ml-2 text-whiteCT font-medium">%</span>
+            </div>
+
+            <div className="text-grayTextCT mt-1 flex items-center">
+              Số tiền Trade ( Gà ) :
+              <span className="text-yellowCT text-[32px] font-medium ml-4">
+                {handleParseFloat2(percentUSDT)} $
+              </span>
+            </div>
           </div>
 
-          <div className="text-grayTextCT mt-1 flex items-center">
-            Số tiền Trade ( Gà ) :
-            <span className="text-yellowCT text-[32px] font-medium ml-4">
-              {handleParseInt(percentUSDT)}
-            </span>
-          </div>
-
-          {isTrade && (
-            <span className="text-grayTextCT">
-              ---------------------------------------
-            </span>
-          )}
-
-          <div>
+          <div className="mt-5">
             {isWaitingForCompletion ? (
               <div>
                 <Button text="Đang chờ hoàn tất ...">
@@ -161,24 +162,22 @@ const StartTradingHome: React.FC = () => {
           </div>
 
           <>
-            {isTrade && (
               <>
-                <div className="text-grayTextCT mt-3">
-                  Số lần ngầm :<span className="text-red-500 mg-l-5">1</span>/
+                <div className="text-grayTextCT mt-3 line-through">
+                  Số lần ngầm :<span className="text-red-500 mg-l-5">0</span>/
                   <span className="text-green-500">3</span>
                 </div>
 
-                <div className="text-grayTextCT mg-t-15">
-                  Thếp đang chạy :<span className="text-red-500 mg-l-5">1</span>
+                <div className="text-grayTextCT mg-t-15 line-through">
+                  Thếp đang chạy :<span className="text-red-500 mg-l-5">0</span>
                   /<span className="text-green-500">6</span>
                 </div>
 
-                <div className="text-grayTextCT mg-t-15 line-through">
+                <div className="text-grayTextCT mg-t-15 line-through">  
                   Số lần vào lệnh hôm nay :
                   <span className=" ml-2 ">Chưa phát triển</span>
                 </div>
               </>
-            )}
           </>
         </div>
       </div>

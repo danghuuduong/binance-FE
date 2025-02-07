@@ -1,6 +1,10 @@
-// Hàm định dạng giá trị số với dấu phẩy (,) và dấu chấm (.)
-const handleParseInt = (value: number | undefined) => {
-  console.log("🚀 ~ handleParseInt ~ value:", value);
-  return value !== undefined && value !== null ? parseFloat(value.toFixed(2)) : "-";
+const handleParseFloat2 = (value: number | string | undefined,type = 2) => {
+  // Chuyển string thành number nếu là string, nếu không thì giữ nguyên giá trị
+  const parsedValue = (typeof value === "string" ? parseFloat(value) : value);
+  
+  return parsedValue !== undefined && parsedValue !== null && !isNaN(parsedValue) 
+    ? parseFloat(parsedValue.toFixed(type)) 
+    : "-";
 };
-export { handleParseInt };
+
+export { handleParseFloat2 };
