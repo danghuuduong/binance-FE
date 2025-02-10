@@ -26,8 +26,6 @@ const ModalStartTradingHome: React.FC<ModalStartTradingHomeI> = ({ isTrade, chic
                             <div className="ml-6"> + 0/6 ( Chưa kịp vào lệnh) </div>
 
                         </div>
-
-
                     </div>
                     :
                     <div>

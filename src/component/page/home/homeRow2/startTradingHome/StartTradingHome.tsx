@@ -140,6 +140,9 @@ const StartTradingHome: React.FC = () => {
             )}
           </div>
 
+            <div>
+              sdasdasdasdasd
+            </div>
           <>
             <div className="text-grayTextCT mt-3 line-through">
               Số lần ngầm :<span className="text-red-500 mg-l-5">0</span>/
