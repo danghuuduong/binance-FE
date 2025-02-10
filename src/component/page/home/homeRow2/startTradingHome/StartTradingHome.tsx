@@ -9,6 +9,7 @@ import LoadDingPage from "../../../../../common/components/loadingPage/LoadingPa
 import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
 import { dataUSDI } from "../../../../../interface/HomeI/StartTradingHomeI/StartTradingHomeType";
 import ThemeContext from "../../../../../context/FoodContext";
+import StartTradingHandle from "./StartTradingHandle";
 
 const optionsChicken: string[] = ["10", "20", "30"];
 
@@ -88,9 +89,7 @@ const StartTradingHome: React.FC = () => {
       console.log("Error volume data:", error);
     }
   };
-  const percentUSDT =
-    (Number(largest) / 100) * Number(chickenType) || 0; // Số tiền sẽ cược
-  console.log("🚀 ~ dataUSD?.USDT?.total:", dataUSD?.USDT?.total);
+  const percentUSDT = (Number(largest) / 100) * Number(chickenType) || 0; // Số tiền sẽ cược
 
   return (
     <>
@@ -107,40 +106,20 @@ const StartTradingHome: React.FC = () => {
             </span>
           </div>
 
-          <div className="border-2 border-[#3d3d3d] mt-3 p-3">
-            <div className="text-grayTextCT mt-3">
-              Số Tiền lớn nhất :
-              <span className="text-whiteCT ml-2">
-                {handleParseFloat2(largest)} USD
-              </span>
-            </div>
-
-            <div className="text-grayTextCT mt-3 flex items-center">
-              <span> Tiền Trade :</span>
-              <Select
-                options={optionsChicken}
-                value={chicken}
-                onChange={handleChange}
-                disabled={isTrade || isWaitingForCompletion}
-              />
-              <span className="ml-2 text-whiteCT font-medium">%</span>
-            </div>
-
-            <div className="text-grayTextCT mt-1 flex items-center">
-              Số tiền Trade ( Gà ) :
-              <span className="text-yellowCT text-[32px] font-medium ml-4">
-                {handleParseFloat2(percentUSDT)} $
-              </span>
-            </div>
-          </div>
+          <StartTradingHandle largest={largest} percentUSDT={percentUSDT}>
+            <Select
+              options={optionsChicken}
+              value={chicken}
+              onChange={handleChange}
+              disabled={isTrade || isWaitingForCompletion}
+            />
+          </StartTradingHandle>
 
           <div className="mt-5">
             {isWaitingForCompletion ? (
-              <div>
-                <Button text="Đang chờ hoàn tất ...">
-                  <IconLoading />
-                </Button>
-              </div>
+              <Button text="Đang chờ hoàn tất ...">
+                <IconLoading />
+              </Button>
             ) : (
               <Button
                 text={isTrade ? "Stop Trading" : "Start Trading"}
@@ -162,22 +141,20 @@ const StartTradingHome: React.FC = () => {
           </div>
 
           <>
-              <>
-                <div className="text-grayTextCT mt-3 line-through">
-                  Số lần ngầm :<span className="text-red-500 mg-l-5">0</span>/
-                  <span className="text-green-500">3</span>
-                </div>
+            <div className="text-grayTextCT mt-3 line-through">
+              Số lần ngầm :<span className="text-red-500 mg-l-5">0</span>/
+              <span className="text-green-500">3</span>
+            </div>
 
-                <div className="text-grayTextCT mg-t-15 line-through">
-                  Thếp đang chạy :<span className="text-red-500 mg-l-5">0</span>
-                  /<span className="text-green-500">6</span>
-                </div>
+            <div className="text-grayTextCT mg-t-15 line-through">
+              Thếp đang chạy :<span className="text-red-500 mg-l-5">0</span>/
+              <span className="text-green-500">6</span>
+            </div>
 
-                <div className="text-grayTextCT mg-t-15 line-through">  
-                  Số lần vào lệnh hôm nay :
-                  <span className=" ml-2 ">Chưa phát triển</span>
-                </div>
-              </>
+            <div className="text-grayTextCT mg-t-15 line-through">
+              Số lần vào lệnh hôm nay :
+              <span className=" ml-2 ">Chưa phát triển</span>
+            </div>
           </>
         </div>
       </div>
@@ -185,11 +162,7 @@ const StartTradingHome: React.FC = () => {
         <Modal
           closeModal={closeModal}
           confirmModal={confirmModal}
-          title={
-            isTrade
-              ? "Bạn muốn STOP Trading ?"
-              : "Bạn có chắc chắn Start Trading ?"
-          }
+          title={ isTrade ? "Bạn muốn STOP Trading ?" : "Bạn có chắc chắn Start Trading ?" }
           classCT={isTrade ? "bg-red-600" : "bg-yellowCT text-gray-600"}
           textOK={isTrade ? "STOP" : "START"}
         >
