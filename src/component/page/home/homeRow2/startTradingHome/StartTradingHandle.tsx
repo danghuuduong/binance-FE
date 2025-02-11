@@ -6,16 +6,18 @@ interface StartTradingHandleProps {
   percentUSDT: number;
 }
 
-const StartTradingHandle: React.FC<StartTradingHandleProps> = ({ largest, children, percentUSDT, }) => {
-  console.log("🚀 ~ file:percentUSDT", percentUSDT)
-  const tienflend = 100
-  const thep1 = (percentUSDT * 2) / 100
-  const thepList = [
-    { id: 1, name: "thếp 1", value: thep1 },
-    { id: 2, name: "thếp 2", value: thep1 * 2.5 },
-    { id: 3, name: "thếp 3", value: thep1 * 5.5 },
-    { id: 4, name: "thếp 4", value: thep1 * 12 },
-    { id: 5, name: "thếp 5", value: thep1 * 23.5 },
+const StartTradingHandle: React.FC<StartTradingHandleProps> = ({
+  largest,
+  children,
+  percentUSDT,
+}) => {
+  const foldingOne = (percentUSDT * 2.2) / 100;
+  const foldingList = [
+    { folding: "1", value: foldingOne },
+    { folding: "2", value: foldingOne * 2.5 },
+    { folding: "3", value: foldingOne * 5.5 },
+    { folding: "4", value: foldingOne * 12 },
+    { folding: "5", value: foldingOne * 23.5 },
   ];
   return (
     <>
@@ -42,16 +44,25 @@ const StartTradingHandle: React.FC<StartTradingHandleProps> = ({ largest, childr
 
         <div>
           <ul>
-            {thepList.map((item) => {
-              return <li key={item.id} className="text-grayTextCT mt-3">
-                {item.name} :<span className="text-red-500 ml-2">{item.value} $</span>
-              </li>
+            {foldingList.map((item) => {
+              return (
+                <li key={item.folding} className="text-grayTextCT mt-2">
+                  <span>Thếp {item.folding} :</span>
+                  <span className="text-red-500 ml-2">
+                    {handleParseFloat2(item.value, 2)} $
+                  </span>
+                </li>
+              );
             })}
           </ul>
-          <div className="mt-3">
-            <span>Tổng :</span> 
-            <span className="text-red-500 ml-2">
-              {thepList.reduce((total, item) => total + item.value, 0)}
+          <div className="mt-2">
+            <span>Tổng dự kiến:</span>
+            <span className="text-red-500 ml-3">
+              {handleParseFloat2(
+                foldingList.reduce((total, item) => total + item.value, 0),
+                4
+              )}{" "}
+              $
             </span>
           </div>
         </div>
