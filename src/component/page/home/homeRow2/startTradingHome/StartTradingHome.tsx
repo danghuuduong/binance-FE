@@ -9,7 +9,7 @@ import LoadDingPage from "../../../../../common/components/loadingPage/LoadingPa
 import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
 import { dataUSDI } from "../../../../../interface/HomeI/StartTradingHomeI/StartTradingHomeType";
 import ThemeContext from "../../../../../context/FoodContext";
-import StartTradingHandle from "./StartTradingHandle";
+import Foldin from "./Foldin";
 
 const optionsChicken: string[] = ["10", "20", "30"];
 
@@ -17,12 +17,12 @@ const StartTradingHome: React.FC = () => {
   const [dataUSD, setDataUSD] = useState<dataUSDI | null>(null); // USDT hiện tại
   const chickenType = localStorage.getItem("chickenType") || "10"; // %
   const [chicken, setChicken] = useState<string>(chickenType); // Số tiền sẽ cươc
-  const [isTrade, setIsTrade] = useState<boolean>(false); // Bắt đầu trading
   const [isModal, setIsModal] = useState(false);
 
   const [isWaitingForCompletion, setisWaiting] = useState<boolean>(false); // Chờ để kết thúc lệnh
   const [isLoading, setIsLoading] = useState(false);
-  const { dataMount } = useContext(ThemeContext);
+  const { dataMount, isTrade, setIsTrade } = useContext(ThemeContext);
+
   const largest = dataMount?.largest;
 
   useEffect(() => {
@@ -89,7 +89,7 @@ const StartTradingHome: React.FC = () => {
       console.log("Error volume data:", error);
     }
   };
-  const percentUSDT = (Number(largest) / 100) * Number(chickenType) || 0; // Số tiền sẽ cược
+  const USDT = (Number(largest) / 100) * Number(chickenType) || 0; // Số tiền sẽ cược
 
   return (
     <>
@@ -106,14 +106,14 @@ const StartTradingHome: React.FC = () => {
             </span>
           </div>
 
-          <StartTradingHandle largest={largest} percentUSDT={percentUSDT}>
+          <Foldin largest={largest} money={USDT}>
             <Select
               options={optionsChicken}
               value={chicken}
               onChange={handleChange}
               disabled={isTrade || isWaitingForCompletion}
             />
-          </StartTradingHandle>
+          </Foldin>
 
           <div className="mt-5">
             {isWaitingForCompletion ? (
@@ -123,11 +123,10 @@ const StartTradingHome: React.FC = () => {
             ) : (
               <Button
                 text={isTrade ? "Stop Trading" : "Start Trading"}
-                classCT={`${
-                  isTrade
+                classCT={`${isTrade
                     ? "bg-red-300 hover:bg-red-700"
                     : "bg-yellowCT hover:bg-yellow-200 "
-                } text-grayInButtonYellow`}
+                  } text-grayInButtonYellow`}
                 onClick={() => setIsModal(true)}
               >
                 {isTrade && (
@@ -140,39 +139,20 @@ const StartTradingHome: React.FC = () => {
             )}
           </div>
 
-            <div>
-              sdasdasdasdasd
-            </div>
-          <>
-            <div className="text-grayTextCT mt-3 line-through">
-              Số lần ngầm :<span className="text-red-500 mg-l-5">0</span>/
-              <span className="text-green-500">3</span>
-            </div>
-
-            <div className="text-grayTextCT mg-t-15 line-through">
-              Thếp đang chạy :<span className="text-red-500 mg-l-5">0</span>/
-              <span className="text-green-500">6</span>
-            </div>
-
-            <div className="text-grayTextCT mg-t-15 line-through">
-              Số lần vào lệnh hôm nay :
-              <span className=" ml-2 ">Chưa phát triển</span>
-            </div>
-          </>
         </div>
       </div>
       {isModal && (
         <Modal
           closeModal={closeModal}
           confirmModal={confirmModal}
-          title={ isTrade ? "Bạn muốn STOP Trading ?" : "Bạn có chắc chắn Start Trading ?" }
+          title={isTrade ? "Bạn muốn STOP Trading ?" : "Bạn có chắc chắn Start Trading ?"}
           classCT={isTrade ? "bg-red-600" : "bg-yellowCT text-gray-600"}
           textOK={isTrade ? "STOP" : "START"}
         >
           <ModalStartTradingHome
             isTrade={isTrade}
             chicken={chicken}
-            percentUSDT={percentUSDT}
+            money={USDT}
           />
         </Modal>
       )}

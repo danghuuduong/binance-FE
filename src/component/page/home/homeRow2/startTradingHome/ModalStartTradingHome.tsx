@@ -1,29 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
+import ThemeContext from "../../../../../context/FoodContext";
+import { handleFoding } from "../../../../../common/utils/handleFoding";
+import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
 
 interface ModalStartTradingHomeI {
     isTrade: boolean;
     chicken?: string;
-    percentUSDT?: string | number
+    money?: string | number
 }
 
-const ModalStartTradingHome: React.FC<ModalStartTradingHomeI> = ({ isTrade, chicken, percentUSDT }) => {
-    console.log("isTrade", isTrade);
-
+const ModalStartTradingHome: React.FC<ModalStartTradingHomeI> = ({ isTrade, chicken, money }) => {
+    const { foldingCurrent } = useContext(ThemeContext);
+    const monyCurrent = money && foldingCurrent  ? handleFoding(money, foldingCurrent)  : 0;
     return (<div>
         <>
             {
                 isTrade ?
                     <div className="text-grayTextCT">
                         <div className="text-grayTextCT">
-                            Thếp đang chạy :<span className="text-red-500 mg-l-5">1</span>/
-                            <span className="text-green-500">6</span>
+                            Thếp đang chạy :<span className="text-red-500 mg-l-5">{foldingCurrent}</span>/
+                            <span className="text-green-500">5</span>
                         </div>
                         <div className="mt-4  p-2 rounded-lg border-borderCT border-[1px]">
                             <div> <div className="text-red-500 mr-2 font-[700]"> * Lưu ý :
                             </div>- khi "STOP" sẽ tự động ngắt như sau : </div>
                             <div className="ml-6"> + khi "THẮNG" lệnh</div>
-                            <div className="ml-6"> + Hoàn thành 6/6 </div>
-                            <div className="ml-6"> + 0/6 ( Chưa kịp vào lệnh) </div>
+                            <div className="ml-6"> + Hoàn thành 5/5 </div>
+                            <div className="ml-6"> + 0/5 ( Chưa kịp vào lệnh) </div>
 
                         </div>
                     </div>
@@ -33,10 +36,13 @@ const ModalStartTradingHome: React.FC<ModalStartTradingHomeI> = ({ isTrade, chic
                             <span className="text-grayTextCT">Lựa chọn của bạn là : </span>
                             <span className="text-whiteCT ml-2">{chicken} %</span>
                         </div>
-
                         <div>
-                            <span className="text-grayTextCT">Số tiền Trading ( Gà ) : </span>
-                            <span className="text-whiteCT ml-2">{percentUSDT} $</span>
+                            <span className="text-grayTextCT">Tiền Trading  </span>
+                            {money && foldingCurrent &&  <span className="text-green-500 ml-2">{handleParseFloat2(monyCurrent)} $</span>}
+                        </div>
+                        <div>
+                            <span className="text-grayTextCT">Tổng tiền Trading ( Gà ) : </span>
+                            <span className="text-whiteCT ml-2">{money} $</span>
                         </div>
 
                     </div>

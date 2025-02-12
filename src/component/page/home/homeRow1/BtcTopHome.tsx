@@ -2,9 +2,9 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import { CandlestickDataI } from "../../../../interface/HomeI/candlestickDataI";
-import { formatNumber } from "../../../../common/utils/abc";
 import Select from "../../../../common/components/select/Select";
 import LoadDingPage from "../../../../common/components/loadingPage/LoadingPage";
+import { formatNumber } from "../../../../common/utils/utilCovert";
 
 const BtcTopHome: React.FC = () => {
   const [data, setData] = useState<CandlestickDataI | null>(null);

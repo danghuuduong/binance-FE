@@ -1,12 +1,15 @@
 import { FunctionComponent } from "react";
 
+interface IconLoadingProps {
+  size?: number;
+}
 
-const IconLoading: FunctionComponent = () => {
+const IconLoading: FunctionComponent<IconLoadingProps> = ({ size = 8 }) => {
   return (
     <div role="status " className="translate-x-3">
       <svg
         aria-hidden="true"
-        className="inline w-8 h-8 text-gray-200 animate-spin fill-green-500"
+        className={`inline w-${size} h-${size} text-gray-200 animate-spin fill-green-500`}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

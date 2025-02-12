@@ -9,8 +9,12 @@ interface DataMount {
 
 interface FoodContextI {
   dataMount?: DataMount  | null;
-  isLoadingMount?: boolean;
   fetchAmountData?: () => void;
+  isLoadingMount?: boolean;
+  isTrade: boolean;
+  setIsTrade: React.Dispatch<React.SetStateAction<boolean>>;
+  foldingCurrent: number;
+  setFoldingCurrent: React.Dispatch<React.SetStateAction<number>>;
 }
 
 interface FoodProviderPropsI {
