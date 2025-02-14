@@ -15,6 +15,8 @@ interface FoodContextI {
   setIsTrade: React.Dispatch<React.SetStateAction<boolean>>;
   foldingCurrent: number;
   setFoldingCurrent: React.Dispatch<React.SetStateAction<number>>;
+  isWaitingForCompletion: boolean;
+  setisWaiting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface FoodProviderPropsI {

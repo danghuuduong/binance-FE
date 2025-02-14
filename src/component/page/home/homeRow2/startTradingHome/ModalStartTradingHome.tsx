@@ -38,7 +38,7 @@ const ModalStartTradingHome: React.FC<ModalStartTradingHomeI> = ({ isTrade, chic
                         </div>
                         <div>
                             <span className="text-grayTextCT">Tiền Trading  </span>
-                            {money && foldingCurrent &&  <span className="text-green-500 ml-2">{handleParseFloat2(monyCurrent)} $</span>}
+                            <span className="text-green-500 ml-2">{handleParseFloat2(monyCurrent)} $</span>
                         </div>
                         <div>
                             <span className="text-grayTextCT">Tổng tiền Trading ( Gà ) : </span>

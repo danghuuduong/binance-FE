@@ -9,11 +9,13 @@ const ThemeContext = createContext<FoodContextI>(null!);
 
 const ContextWrap = ({ children }: FoodProviderPropsI) => {
   const { data: dataMount, isLoading: isLoadingMount, error, refetch: fetchAmountData } = useAmountApi();
+  const [foldingCurrent, setFoldingCurrent] = useState<number>(1);
   const [isTrade, setIsTrade] = useState<boolean>(false); // Bắt đầu trading
-  const [foldingCurrent, setFoldingCurrent] = useState<number>(5);
+    const [isWaitingForCompletion, setisWaiting] = useState<boolean>(false); // Chờ để kết thúc lệnh
+  
 
   return (
-    <ThemeContext.Provider value={{ isLoadingMount, dataMount, isTrade, setIsTrade, fetchAmountData, foldingCurrent, setFoldingCurrent, }}>
+    <ThemeContext.Provider value={{ isLoadingMount, dataMount, isTrade, setIsTrade, fetchAmountData, foldingCurrent, setFoldingCurrent, isWaitingForCompletion,setisWaiting}}>
       {children}
     </ThemeContext.Provider>
   );

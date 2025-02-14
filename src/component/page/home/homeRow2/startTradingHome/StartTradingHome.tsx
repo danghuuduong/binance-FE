@@ -19,9 +19,8 @@ const StartTradingHome: React.FC = () => {
   const [chicken, setChicken] = useState<string>(chickenType); // Số tiền sẽ cươc
   const [isModal, setIsModal] = useState(false);
 
-  const [isWaitingForCompletion, setisWaiting] = useState<boolean>(false); // Chờ để kết thúc lệnh
   const [isLoading, setIsLoading] = useState(false);
-  const { dataMount, isTrade, setIsTrade } = useContext(ThemeContext);
+  const { dataMount, isTrade, setIsTrade,isWaitingForCompletion,setisWaiting } = useContext(ThemeContext);
 
   const largest = dataMount?.largest;
 
