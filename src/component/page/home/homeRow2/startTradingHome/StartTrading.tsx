@@ -1,47 +1,29 @@
 import React, { useContext, useEffect, useState } from "react";
 import Select from "../../../../../common/components/select/Select";
 import Modal from "../../../../../common/components/modal/Modal";
-import ModalStartTradingHome from "./ModalStartTradingHome";
+import ModalStart from "./ModalStart";
 import api from "../../../../../api/axios";
 import Button from "../../../../../common/components/button/Button";
 import IconLoading from "../../../../../common/components/iconLoading/IconLoading";
-import LoadDingPage from "../../../../../common/components/loadingPage/LoadingPage";
-import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
-import { dataUSDI } from "../../../../../interface/HomeI/StartTradingHomeI/StartTradingHomeType";
 import ThemeContext from "../../../../../context/FoodContext";
-import Foldin from "./Foldin";
+import Folding from "./Folding";
+import Infomation from "./Infomation";
+import { handleFodingToMoney } from "../../../../../common/utils/handleFoding";
 
 const optionsChicken: string[] = ["10", "20", "30"];
 
-const StartTradingHome: React.FC = () => {
-  const [dataUSD, setDataUSD] = useState<dataUSDI | null>(null); // USDT hiện tại
+const StartTrading: React.FC = () => {
   const chickenType = localStorage.getItem("chickenType") || "10"; // %
   const [chicken, setChicken] = useState<string>(chickenType); // Số tiền sẽ cươc
   const [isModal, setIsModal] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
-  const { dataMount, isTrade, setIsTrade,isWaitingForCompletion,setisWaiting } = useContext(ThemeContext);
+  const { dataMount, isTrade, setIsTrade, isWaitingForCompletion, setisWaiting, foldingCurrent } = useContext(ThemeContext);
+  const largestMoney = dataMount?.largest;
 
-  const largest = dataMount?.largest;
+  const totalAmount = (Number(largestMoney) / 100) * Number(chickenType) || 0; // Số tiền lớn nhất ,Số tiền sẽ cược 
+  const moneyOne = totalAmount && foldingCurrent ? handleFodingToMoney(totalAmount, foldingCurrent) : 0;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await api.get("/my-infomation");
-        if (response?.status === 200) {
-          setDataUSD(response?.data);
-        }
-      } catch (err) {
-        console.error("🚀 ~ useEffect ~ error:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const handleChange = (chicken: string) => {
+  const handleChickenTypeChange = (chicken: string) => {
     localStorage.setItem("chickenType", chicken);
     setChicken(chicken);
   };
@@ -55,64 +37,49 @@ const StartTradingHome: React.FC = () => {
     if (isTrade) {
       setisWaiting(true);
       stopTrading();
-    } else {
-      startTrading();
     }
+    startTrading();
   };
 
   const startTrading = async () => {
-    setIsLoading(true);
     try {
-      const response = await api.post("status/start-trading");
-      if (response?.status === 201) {
-        setIsTrade(true);
-        setIsLoading(false);
-      }
+      const response = await api.post("status/start-trading", {
+        moneyfodingOne: moneyOne,
+        totalAmount,
+        foldingCurrent,
+      });
+      response?.status === 201 && setIsTrade(true);
     } catch (error) {
       setIsTrade(false);
-      setIsLoading(false);
-      console.log("Error volume data:", error);
+      console.log("API status/start-trading", error);
     }
   };
 
   const stopTrading = async () => {
-    setIsLoading(true);
     try {
       const response = await api.post("status/stop-trading");
-      if (response?.status === 201) {
-        setIsTrade(false);
-        setIsLoading(false);
-      }
+      response?.status === 201 && setIsTrade(false);
     } catch (error) {
-      setIsLoading(false);
-      console.log("Error volume data:", error);
+      console.log("API status/stop-trading", error);
     }
   };
-  const USDT = (Number(largest) / 100) * Number(chickenType) || 0; // Số tiền sẽ cược
+
 
   return (
     <>
-      {isLoading && <LoadDingPage />}
       <div>
-        <div className="text-2xl font-medium text-center ">
-          Bắt Đầu Trading tool
-        </div>
+        <div className="text-2xl font-medium text-center "> Bắt Đầu Trading tool</div>
         <div className="mt-12">
-          <div className="text-grayTextCT mt-3">
-            Số dư khả dụng :
-            <span className="text-whiteCT ml-2">
-              {handleParseFloat2(dataUSD?.USDT?.total)} USD
-            </span>
-          </div>
+          <Infomation />
 
-          <Foldin largest={largest} money={USDT}>
+          <Folding largest={largestMoney} money={totalAmount}>
             <Select
               options={optionsChicken}
               value={chicken}
-              onChange={handleChange}
+              onChange={handleChickenTypeChange}
               disabled={isTrade || isWaitingForCompletion}
             />
-          </Foldin>
+          </Folding>
 
           <div className="mt-5">
             {isWaitingForCompletion ? (
@@ -122,10 +89,7 @@ const StartTradingHome: React.FC = () => {
             ) : (
               <Button
                 text={isTrade ? "Stop Trading" : "Start Trading"}
-                classCT={`${isTrade
-                    ? "bg-red-300 hover:bg-red-700"
-                    : "bg-yellowCT hover:bg-yellow-200 "
-                  } text-grayInButtonYellow`}
+                classCT={`${isTrade ? "bg-red-300 hover:bg-red-700" : "bg-yellowCT hover:bg-yellow-200 "} text-grayInButtonYellow`}
                 onClick={() => setIsModal(true)}
               >
                 {isTrade && (
@@ -148,10 +112,10 @@ const StartTradingHome: React.FC = () => {
           classCT={isTrade ? "bg-red-600" : "bg-yellowCT text-gray-600"}
           textOK={isTrade ? "STOP" : "START"}
         >
-          <ModalStartTradingHome
+          <ModalStart
             isTrade={isTrade}
             chicken={chicken}
-            money={USDT}
+            money={totalAmount}
           />
         </Modal>
       )}
@@ -159,4 +123,4 @@ const StartTradingHome: React.FC = () => {
   );
 };
 
-export default StartTradingHome;
+export default StartTrading;

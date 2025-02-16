@@ -2,7 +2,7 @@ import React from "react";
 import TradingViewWidget from "./homeRow1/TradingViewWidget";
 import HomeLineChart from "./homeRow2/LineChartHome";
 import BXHTopHome from "./topBX/BXHTopHome";
-import StartTradingHome from "./homeRow2/startTradingHome/StartTradingHome";
+import StartTrading from "./homeRow2/startTradingHome/StartTrading";
 import BtcTopHome from "./homeRow1/BtcTopHome";
 
 const Home: React.FC = () => {
@@ -20,7 +20,7 @@ const Home: React.FC = () => {
         </div>
 
         <div className=" bg-grayCT rounded-lg col-span-3 px-4 py-4 mt-2">
-          <StartTradingHome />
+          <StartTrading />
         </div>
       </div>
 

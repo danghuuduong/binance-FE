@@ -1,8 +1,8 @@
 import { useContext, } from "react";
 import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
 import ThemeContext from "../../../../../context/FoodContext";
-import { handleFoding } from "../../../../../common/utils/handleFoding";
 import IconLoading from "../../../../../common/components/iconLoading/IconLoading";
+import { handleFodingToMoney } from "../../../../../common/utils/handleFoding";
 
 interface StartTradingHandleProps {
   largest: string | undefined;
@@ -19,11 +19,11 @@ const Foldin: React.FC<StartTradingHandleProps> = ({
   const { foldingCurrent,isTrade } = useContext(ThemeContext);
 
   const foldingList = [
-    { folding: "1", value: handleFoding(money, 1) },
-    { folding: "2", value: handleFoding(money, 2) },
-    { folding: "3", value: handleFoding(money, 3) },
-    { folding: "4", value: handleFoding(money, 4) },
-    { folding: "5", value: handleFoding(money, 5) },
+    { folding: "1", value: handleFodingToMoney(money, 1) },
+    { folding: "2", value: handleFodingToMoney(money, 2) },
+    { folding: "3", value: handleFodingToMoney(money, 3) },
+    { folding: "4", value: handleFodingToMoney(money, 4) },
+    { folding: "5", value: handleFodingToMoney(money, 5) },
   ];
 
   return (
@@ -55,7 +55,7 @@ const Foldin: React.FC<StartTradingHandleProps> = ({
               return (
                 <li key={item.folding} className={`mt-2 flex items-center ${foldingCurrent == Number(item.folding) ? "text-green-500 font-bold" : "text-grayTextCT"}`}>
                   <span>Thếp {item.folding} :</span>
-                  <span className="ml-2"> {handleParseFloat2(handleFoding(money, Number(item.folding)))} $</span>
+                  <span className="ml-2"> {handleParseFloat2(handleFodingToMoney(money, Number(item.folding)))} $</span>
                   {isTrade &&foldingCurrent == Number(item.folding) && <span><IconLoading size={7} /></span>}
                 </li>
               );
