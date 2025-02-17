@@ -2,14 +2,11 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import { CandlestickDataI } from "../../../../interface/HomeI/candlestickDataI";
-import Select from "../../../../common/components/select/Select";
 import LoadDingPage from "../../../../common/components/loadingPage/LoadingPage";
 import { formatNumber } from "../../../../common/utils/utilCovert";
 
 const BtcTopHome: React.FC = () => {
   const [data, setData] = useState<CandlestickDataI | null>(null);
-  const storedType = localStorage.getItem("candlestickType") || "1h";
-  const [type, setType] = useState<string>(storedType);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [socket, setSocket] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,37 +29,12 @@ const BtcTopHome: React.FC = () => {
       setIsLoading(false);
       setData(data);
     });
+    
     return () => {
       localStorage.removeItem("candlestickType");
       newSocket.disconnect();
     };
   }, []);
-
-  const handleChange = (value: string) => {
-    setIsLoading(true);
-    setType(value);
-    setData(null);
-    localStorage.setItem("candlestickType", value);
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    socket && socket.emit("changeTimeInterval", value);
-  };
-  const timeIntervals = [
-    "1m",
-    "3m",
-    "5m",
-    "15m",
-    "30m",
-    "1h",
-    "2h",
-    "4h",
-    "6h",
-    "8h",
-    "12h",
-    "1d",
-    "3d",
-    "1w",
-    "1M",
-  ];
 
   return (
     <>
@@ -82,11 +54,6 @@ const BtcTopHome: React.FC = () => {
             <span className="text-primary  text-2xl ml-2">
               {data?.closePrice ? formatNumber(data.closePrice) : "-"}
             </span>
-            <Select
-              options={timeIntervals}
-              value={type}
-              onChange={handleChange}
-            />
           </div>
 
          
