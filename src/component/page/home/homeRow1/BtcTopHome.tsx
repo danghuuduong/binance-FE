@@ -29,13 +29,23 @@ const BtcTopHome: React.FC = () => {
       setIsLoading(false);
       setData(data);
     });
-    
+
     return () => {
       localStorage.removeItem("candlestickType");
       newSocket.disconnect();
     };
   }, []);
 
+  const EMACross = () => {
+    switch (data?.emaCrossOverStatus?.status) {
+      case "down":
+        return "9 Cross 25 (Down)";
+      case "up":
+        return "9 Cross 25 (Up)";
+      default:
+        return "Không cắt nhau";
+    }
+  };
   return (
     <>
       {isLoading && <LoadDingPage />}
@@ -47,7 +57,7 @@ const BtcTopHome: React.FC = () => {
         </div> */}
 
         <div className="flex justify-between items-center">
-          
+
 
           <div className=" font-medium flex items-center">
             <span className="text-yellowCT text-xl">BTC : </span>
@@ -56,28 +66,28 @@ const BtcTopHome: React.FC = () => {
             </span>
           </div>
 
-         
 
-          <div>
+
+          {/* <div>
             <div className="text-grayTextCT">24h High</div>
             <div className="text-green-500">
               {data?.highPrice ? formatNumber(data.openPrice) : "-"}
             </div>
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             <div className="text-grayTextCT">24h Low</div>
             <div className="text-red-500">
               {data?.lowPrice ? formatNumber(data.highPrice) : "-"}
             </div>
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             <div className="text-grayTextCT">24h Volume(USDT)</div>
             <div className="text-red-500">
               {data?.lowPrice ? formatNumber(data.lowPrice) : "-"}
             </div>
-          </div>
+          </div> */}
 
           <div>
             <div className="text-grayTextCT">Volume : </div>
@@ -90,10 +100,23 @@ const BtcTopHome: React.FC = () => {
           </div>
 
           <div>
-            <div className="text-grayTextCT">Status</div>
+            <div className="text-grayTextCT">Volume : </div>
+            <div>{data?.timeBinance || "-"}</div>
+          </div>
+
+          <div>
+            <div className="text-grayTextCT">EMACross</div>
+            <div>
+              <span>{EMACross()}</span>
+              <span> - </span>
+              <span>time: {data?.emaCrossOverStatus?.time === "null" ? `"-"` : data?.emaCrossOverStatus?.time}</span></div>
+          </div>
+
+          <div>
+            <div className="text-grayTextCT">IsTrading</div>
             <div>{`${data?.statusTrading}`}</div>
           </div>
-          
+
         </div>
       </div>
     </>

@@ -8,6 +8,11 @@ interface CandlestickDataI {
   closeTime: string;
   type: string;
   statusTrading?: string;
+  emaCrossOverStatus?: {
+    status: string;
+    time: string;
+  }
+  timeBinance?: string;
 }
 
 interface SocketMessageI {
