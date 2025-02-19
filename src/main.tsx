@@ -4,7 +4,7 @@ import App from "./App.tsx";
 import MainLayout from "./component/layout/MainLayout.tsx";
 import "././common/common.css";
 import "./index.css";
-import CandlestickHistory from "./component/page/candlesHistory/CandlestickHistory.tsx";
+import EmaCrossHistory from "./component/page/emaCrossHistory/EmaCrossHistory.tsx";
 
 import {
   createBrowserRouter, RouterProvider,
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/candlestickHistory",
-        element: <CandlestickHistory />,
+        element: <EmaCrossHistory />,
       },
     ],
   },

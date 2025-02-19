@@ -4,6 +4,7 @@ import HomeLineChart from "./homeRow2/LineChartHome";
 import BXHTopHome from "./topBX/BXHTopHome";
 import StartTrading from "./homeRow2/startTradingHome/StartTrading";
 import BtcTopHome from "./homeRow1/BtcTopHome";
+import CandlestickHistory from "../emaCrossHistory/EmaCrossHistory";
 
 const Home: React.FC = () => {
   return (
@@ -25,13 +26,17 @@ const Home: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-12 gap-2 mt-2">
-        <div className=" bg-grayCT rounded-lg col-span-6 py-4 pl-20">
+        <div className="bg-grayCT rounded-lg col-span-12 pt-4  pb-6 px-4 h-[690px]">
+          <CandlestickHistory />
+        </div>
+
+        {/* <div className=" bg-grayCT rounded-lg col-span-6 py-4 pl-20">
           <BXHTopHome />
         </div>
 
-        <div className=" bg-grayCT rounded-lg col-span-6 p-4">
+        <div className="bg-grayCT rounded-lg col-span-6 p-4">
           <HomeLineChart />
-        </div>
+        </div> */}
       </div>
     </>
   );

@@ -11,6 +11,7 @@ interface FoodContextI {
   dataMount?: DataMount  | null;
   fetchAmountData?: () => void;
   isLoadingMount?: boolean;
+
   isTrade: boolean;
   setIsTrade: React.Dispatch<React.SetStateAction<boolean>>;
   foldingCurrent: number;
