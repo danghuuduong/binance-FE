@@ -2,10 +2,10 @@ import { FunctionComponent, useState } from "react";
 
 interface ButtonProps {
   handlegetPage?: (page: number) => void;
+  totalPages?: number;
 }
-const Pagination: FunctionComponent<ButtonProps> = ({ handlegetPage }) => {
+const Pagination: FunctionComponent<ButtonProps> = ({ handlegetPage, totalPages }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 5;
 
   const handleNext = () => {
     setCurrentPage(currentPage + 1);
@@ -17,7 +17,7 @@ const Pagination: FunctionComponent<ButtonProps> = ({ handlegetPage }) => {
     handlegetPage && handlegetPage(currentPage - 1);
   };
 
-  const pageList = [...Array(5)].map((_, index) => index + 1);
+  const pageList = [...Array(totalPages)].map((_, index) => index + 1);
 
   return (
     <nav aria-label="Page navigation example">

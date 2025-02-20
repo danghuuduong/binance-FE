@@ -1,4 +1,4 @@
-interface DataEmaCrossHistoryI {
+interface DataEmaCrossHistoryArrayI {
   _id: string;
   cross: 'up' | 'down';
   isActiveExecuteTrade: boolean;
@@ -7,4 +7,16 @@ interface DataEmaCrossHistoryI {
   foldingCurrent: number;
   __v: number | string;
 }
-export type { DataEmaCrossHistoryI };
+
+interface DataEmaCrossHistoryI {
+  currentPage: string;
+  data: DataEmaCrossHistoryArrayI[];
+  message: string;
+  status: string;
+  totalCount: number;
+  totalPages: number;
+}
+
+
+
+export type { DataEmaCrossHistoryI, DataEmaCrossHistoryArrayI };

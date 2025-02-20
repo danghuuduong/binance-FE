@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
-import { DataEmaCrossHistoryI } from "../interface/HomeI/EmaCrossHistoryI/EmaCrossHistoryI";
+import { DataEmaCrossHistoryArrayI, DataEmaCrossHistoryI } from "../interface/HomeI/EmaCrossHistoryI/EmaCrossHistoryI";
 
 
 
 
 const useEmaCrossHistoryApi = (page: number) => {
-  const [data, setData] = useState<DataEmaCrossHistoryI[] | null>(null);
+  const [data, setData] = useState<DataEmaCrossHistoryI | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>(null);
 
@@ -21,7 +21,9 @@ const useEmaCrossHistoryApi = (page: number) => {
           limit: 10,
         },
       });
-      if (responseData?.length > 0) {
+      console.log("responseData",responseData);
+      
+      if (responseData?.status == "ok") {
         setData(responseData);
       }
     } catch (error) {

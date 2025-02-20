@@ -6,6 +6,10 @@ import Pagination from "../../../common/components/pagination/Pagination";
 const EmaCrossHistory: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const { data: dataEmaCrossHistory, isLoading: isLoadingEmaCrossHistory, error: errorEmaCrossHistory, refetch: fetchEmaCrossHistory } = useEmaCrossHistoryApi(currentPage);
+  const emaCrossHistoryList = dataEmaCrossHistory?.data;
+  // const totalCount = dataEmaCrossHistory?.totalCount;
+  const totalPages = dataEmaCrossHistory?.totalPages;
+
 
   const handlegetPage = (page: number) => {
     setCurrentPage(page - 1);
@@ -43,9 +47,9 @@ const EmaCrossHistory: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {dataEmaCrossHistory?.map((value, index) => {
+                {emaCrossHistoryList?.map((value, index) => {
                   return (
-                    <tr className={`${index !== dataEmaCrossHistory.length - 1 ? 'border-b' : ''} border-[#3d3d3d] bg-gray-600 text-white`} key={value._id} >
+                    <tr className={`${index !== emaCrossHistoryList.length - 1 ? 'border-b' : ''} border-[#3d3d3d] bg-gray-600 text-white`} key={value._id} >
                       <th className="px-6 py-4 ">
                         {value.cross === "up" ? "EMA 9 cross EMA 25 Từ dưới lên" : "EMA 9 cross EMA 25 Từ trên xuống"}
                       </th>
@@ -72,7 +76,7 @@ const EmaCrossHistory: React.FC = () => {
           </div>
         </div>
         <div className="flex justify-center  translate-y-[-15px]">
-          <Pagination handlegetPage={handlegetPage} />
+          <Pagination totalPages={totalPages} handlegetPage={handlegetPage} />
         </div>
       </div>
 
