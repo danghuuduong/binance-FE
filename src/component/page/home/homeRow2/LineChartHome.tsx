@@ -4,8 +4,8 @@ import ThemeContext from "../../../../context/FoodContext";
 import { handleParseFloat2 } from "../../../../common/utils/handleParseInt";
 
 const LineChartHome: React.FC = () => {
-  const { dataMount } = useContext(ThemeContext);
-  const historyList = dataMount?.history;
+  const { largestMoneyApi } = useContext(ThemeContext);
+  const historyList = largestMoneyApi?.history;
   const labels = historyList?.map((item) => `${handleParseFloat2(item,0) } $`) || [];
   const data = historyList?.map((value) => parseInt(`${handleParseFloat2(value,0)}`, 10)) || []
 
@@ -19,7 +19,7 @@ const LineChartHome: React.FC = () => {
           labels: labels,
           datasets: [
             {
-              label: `Số tiền lớn nhất ${handleParseFloat2(dataMount?.largest)} $`,
+              label: `Số tiền lớn nhất ${handleParseFloat2(largestMoneyApi?.largest)} $`,
               data: data,
             },
           ],

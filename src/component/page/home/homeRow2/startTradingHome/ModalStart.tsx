@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import ThemeContext from "../../../../../context/FoodContext";
 import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
-import { handleFodingToMoney } from "../../../../../common/utils/handleFoding";
+import { handleFodingToMoney } from "../../../../../common/utils/handleFodingToMoney";
 
 interface ModalStartTradingHomeI {
     isTrade: boolean;

@@ -2,7 +2,7 @@ import { useContext, } from "react";
 import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
 import ThemeContext from "../../../../../context/FoodContext";
 import IconLoading from "../../../../../common/components/iconLoading/IconLoading";
-import { handleFodingToMoney } from "../../../../../common/utils/handleFoding";
+import { handleFodingToMoney } from "../../../../../common/utils/handleFodingToMoney";
 
 interface StartTradingHandleProps {
   largest: string | undefined;

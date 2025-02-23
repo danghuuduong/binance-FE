@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-interface DataMount {
+interface largestMoneyApi {
   _id: string;
   history: string[];
   largest: string;
@@ -8,7 +8,7 @@ interface DataMount {
 }
 
 interface FoodContextI {
-  dataMount?: DataMount  | null;
+  largestMoneyApi?: largestMoneyApi  | null;
   fetchAmountData?: () => void;
   isLoadingMount?: boolean;
 
@@ -30,4 +30,4 @@ interface IFetchFeesApi002 {
   sapError?: boolean;
 }
 
-export type { FoodContextI, FoodProviderPropsI, IFetchFeesApi002, DataMount };
+export type { FoodContextI, FoodProviderPropsI, IFetchFeesApi002, largestMoneyApi };

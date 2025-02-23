@@ -9,7 +9,7 @@ const ThemeContext = createContext<FoodContextI>(null!);
 
 const ContextWrap = ({ children }: FoodProviderPropsI) => {
   //API
-  const { data: dataMount, isLoading: isLoadingMount, error, refetch: fetchAmountData } = useAmountHistoryChangeApi();
+  const { data: largestMoneyApi, isLoading: isLoadingMount, error, refetch: fetchAmountData } = useAmountHistoryChangeApi();
   // State
   const [foldingCurrent, setFoldingCurrent] = useState<number>(1);
   const [isTrade, setIsTrade] = useState<boolean>(false);
@@ -18,7 +18,7 @@ const ContextWrap = ({ children }: FoodProviderPropsI) => {
   return (
     <ThemeContext.Provider
       value={{
-        isLoadingMount, dataMount, fetchAmountData,
+        isLoadingMount, largestMoneyApi, fetchAmountData,
         foldingCurrent, setFoldingCurrent, isTrade, setIsTrade, isWaitingForCompletion, setisWaiting,
 
       }}>

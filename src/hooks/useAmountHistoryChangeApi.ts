@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
-import { DataMount } from "../interface/FoodContext/foodContext";
+import { largestMoneyApi } from "../interface/FoodContext/foodContext";
 
 
 
 const useAmountHistoryChangeApi = () => {
-  const [data, setData] = useState<DataMount | null>(null); // Lưu trữ dữ liệu từ API
+  const [data, setData] = useState<largestMoneyApi | null>(null); // Lưu trữ dữ liệu từ API
   const [isLoading, setIsLoading] = useState(false); // Trạng thái loading
   const [error, setError] = useState<unknown>(null); // Lưu trữ lỗi nếu có
 

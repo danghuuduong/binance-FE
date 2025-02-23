@@ -8,7 +8,7 @@ import IconLoading from "../../../../../common/components/iconLoading/IconLoadin
 import ThemeContext from "../../../../../context/FoodContext";
 import Folding from "./Folding";
 import Infomation from "./Infomation";
-import { handleFodingToMoney } from "../../../../../common/utils/handleFoding";
+import { handleFodingToMoney } from "../../../../../common/utils/handleFodingToMoney";
 
 const optionsChicken: string[] = ["10", "20", "30"];
 
@@ -17,8 +17,8 @@ const StartTrading: React.FC = () => {
   const [chicken, setChicken] = useState<string>(chickenType); // Số tiền sẽ cươc
   const [isModal, setIsModal] = useState(false);
 
-  const { dataMount, isTrade, setIsTrade, isWaitingForCompletion, setisWaiting, foldingCurrent } = useContext(ThemeContext);
-  const largestMoney = dataMount?.largest;
+  const { largestMoneyApi, isTrade, setIsTrade, isWaitingForCompletion, setisWaiting, foldingCurrent } = useContext(ThemeContext);
+  const largestMoney = largestMoneyApi?.largest;
 
   const totalAmount = (Number(largestMoney) / 100) * Number(chickenType) || 0; // Số tiền lớn nhất ,Số tiền sẽ cược 
   const moneyOne = totalAmount && foldingCurrent ? handleFodingToMoney(totalAmount, foldingCurrent) : 0;
@@ -44,10 +44,10 @@ const StartTrading: React.FC = () => {
   const startTrading = async () => {
     try {
       const response = await api.post("status/start-trading", {
-        moneyfodingOne: moneyOne,
-        totalAmount,
-        foldingCurrent,
+        tradeRate: chicken,
+        largestMoney: largestMoney,
       });
+      console.log("response",response)
       response?.status === 201 && setIsTrade(true);
     } catch (error) {
       setIsTrade(false);

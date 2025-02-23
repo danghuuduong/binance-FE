@@ -48,3 +48,69 @@ export default tseslint.config({
   },
 })
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+this.isTrading = true;
+this.totalAmount = 1400;
+this.moneyfodingOne = 32; // không cần thiết sử dụng
+this.foldingCurrent = 1;
+
+this.crossOverResult = "no";
+this.timeCrossEma = "no";
+this.isActiveExecuteTrade = false
+
+const maniTrading = () => {
+
+ //1 phút vào đây 1 lần
+
+ // Get mẹ api Statatus Trading
+  if("Vào Tiền Mẹ rồi"){  //nếu mà Đã vào tiền
+    if("xong rồi"){
+
+      // a Update lại API (Lịch sử Chơi)
+      // b. Post Api isActiveExecuteTradeApi = false
+
+      if("Ăn"){
+        // 1. foldingCurrent = 1
+        // 3/ totalAmount = 1400.
+        if(isWaiingTRading){
+          //Cho phép dừng
+        }
+      } else("Thua"){ {
+      const isFoldingbyMax = "folding" === 5 
+        
+        // 1. foldingCurrent = isFoldingbyMax ? (Trực tiếp bằng  1) : (foldingCurrent + 1)
+        // 2/ totalAmount = 1400
+        if(isWaiingTRading && isFoldingbyMax){
+          //Cho phép dừng
+        }
+      }
+    }
+  }
+  
+  if (!isActiveExecuteTradeApi && EMA && (isTrading || isTradingApi)) {
+    {
+      //chú ý tạo ra hàm  handleFoldingtoMoney(folding) để lấy về 24 $
+      // 0.2 Mua hoặc bán tùy vòa EMACross
+      // 0.3. folding = 
+      //  1. Mua vào 32 lên sàn$ handleFoldingtoMoney(folding)
+      // + Viết tiếp hàm tính toán với 1000 giá BTC . làm sao chốt TP và SP đủ 32$
+
+      //  2. isActiveExecuteTrade = true
+    }
+  }
+}
+
+// Nhiệm vụ tiếp theo 
+// Thêm tính nagw chờ Kết thúc lệnh isWaiingTRading tại status API . === true ( Gửi kèm về websocket)
+// Sửa chố Stattus button . dùng api . lấy từ websocket luôn
