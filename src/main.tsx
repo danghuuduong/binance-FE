@@ -4,12 +4,12 @@ import App from "./App.tsx";
 import MainLayout from "./component/layout/MainLayout.tsx";
 import "././common/common.css";
 import "./index.css";
-import EmaCrossHistory from "./component/page/emaCrossHistory/EmaCrossHistory.tsx";
 
 import {
   createBrowserRouter, RouterProvider,
 } from "react-router-dom";
 import { ContextWrap } from "./context/FoodContext.tsx";
+import OderHistory from "./component/page/oderHistory/oderHistory.tsx";
 
 
 const router = createBrowserRouter([
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/candlestickHistory",
-        element: <EmaCrossHistory />,
+        element: <OderHistory />,
       },
     ],
   },
