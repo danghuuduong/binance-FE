@@ -14,7 +14,7 @@ const useOrderHistoryApi = (page?: number) => {
       const { data: responseData } = await api.get("/order-history");
       console.log("responseData", responseData);
 
-      if (responseData?.length) {
+      if (responseData?.reversedtrades) {
         setData(responseData);
       }
     } catch (error) {

@@ -8,7 +8,7 @@ const items = [
     key: "/",
   },
   {
-    label: "Lịch sử chơi",
+    label: "Lịch sử giao dịch",
     key: "/candlestickHistory",
   },
   {

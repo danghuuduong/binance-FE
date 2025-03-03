@@ -3,7 +3,7 @@ import "./header.css";
 const Header = (): JSX.Element => {
   const headerList = [
     { name: "home", link: "/", text: "Home" },
-    { name: "history", link: "/candlestickHistory", text: "Lịch sử chơi" },
+    { name: "history", link: "/candlestickHistory", text: "Lịch sử giao dịch" },
     { name: "contact", link: "/contact", text: "Liên hệ" },
     { name: "profile", link: "/profile", text: "Avatart" },
   ];
