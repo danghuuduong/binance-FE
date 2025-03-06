@@ -4,7 +4,7 @@ const Header = (): JSX.Element => {
   const headerList = [
     { name: "home", link: "/", text: "Home" },
     { name: "history", link: "/candlestickHistory", text: "Lịch sử giao dịch" },
-    { name: "contact", link: "/contact", text: "Liên hệ" },
+    { name: "MoneyHistory", link: "/moneyHistory", text: "Biến động số dư" },
     { name: "profile", link: "/profile", text: "Avatart" },
   ];
   return (

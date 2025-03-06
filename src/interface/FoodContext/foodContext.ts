@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { dataUSDI } from "../HomeI/StartTradingHomeI/StartTradingHomeType";
 
 interface largestMoneyApi {
   _id: string;
@@ -18,6 +19,8 @@ interface FoodContextI {
   setFoldingCurrent: React.Dispatch<React.SetStateAction<number>>;
   isWaitingForCompletion: boolean;
   setisWaiting: React.Dispatch<React.SetStateAction<boolean>>;
+  usdcurrent: dataUSDI | null
+  setUsdcurrent: React.Dispatch<React.SetStateAction<dataUSDI | null>>;
 }
 
 interface FoodProviderPropsI {

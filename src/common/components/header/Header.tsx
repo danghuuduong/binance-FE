@@ -12,6 +12,10 @@ const items = [
     key: "/candlestickHistory",
   },
   {
+    label: "Biến động số dư",
+    key: "/moneyHistory",
+  },
+  {
     label: "Liên hệ",
     key: "contact",
     disabled: true,

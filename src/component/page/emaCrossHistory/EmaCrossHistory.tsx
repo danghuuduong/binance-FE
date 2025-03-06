@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { handleConvertTime } from "../../../common/utils/handleConvertTime";
 import { useEmaCrossHistoryApi } from "../../../hooks/useEmaCrossHistoryApi";
 import Pagination from "../../../common/components/pagination/Pagination";

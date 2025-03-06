@@ -21,7 +21,6 @@ const useEmaCrossHistoryApi = (page: number) => {
           limit: 10,
         },
       });
-      console.log("responseData",responseData);
       
       if (responseData?.status == "ok") {
         setData(responseData);

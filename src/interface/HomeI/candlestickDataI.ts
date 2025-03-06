@@ -13,6 +13,8 @@ interface CandlestickDataI {
     time: string;
   }
   timeBinance?: string;
+  messenger?: string;
+  isWaitingForCompletionStatus?: boolean
 }
 
 interface SocketMessageI {

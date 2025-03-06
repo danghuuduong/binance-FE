@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import { ContextWrap } from "./context/FoodContext.tsx";
 import OderHistory from "./component/page/oderHistory/oderHistory.tsx";
+import LineChartHome from "./component/page/home/homeRow2/LineChartHome.tsx";
 
 
 const router = createBrowserRouter([
@@ -23,6 +24,13 @@ const router = createBrowserRouter([
       {
         path: "/candlestickHistory",
         element: <OderHistory />,
+      },
+      {
+        path: "/moneyHistory",
+        element:
+          <div className="bg-grayCT rounded-lg mt-10 p-4 px-8">
+            <LineChartHome />
+          </div>
       },
     ],
   },

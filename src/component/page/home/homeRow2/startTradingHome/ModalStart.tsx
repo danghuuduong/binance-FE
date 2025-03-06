@@ -4,7 +4,7 @@ import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
 import { handleFodingToMoney } from "../../../../../common/utils/handleFodingToMoney";
 
 interface ModalStartTradingHomeI {
-    isTrade: boolean;
+    isTrade?: boolean;
     chicken?: string;
     money?: string | number
 }

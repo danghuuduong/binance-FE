@@ -9,7 +9,6 @@ const LineChartHome: React.FC = () => {
   const labels = historyList?.map((item) => `${handleParseFloat2(item,0) } $`) || [];
   const data = historyList?.map((value) => parseInt(`${handleParseFloat2(value,0)}`, 10)) || []
 
-  console.log("🚀 ~ data:", data)
   return (
     <div className="">
       <div className="text-2xl font-medium ">The amount changes</div>
@@ -19,7 +18,7 @@ const LineChartHome: React.FC = () => {
           labels: labels,
           datasets: [
             {
-              label: `Số tiền lớn nhất ${handleParseFloat2(largestMoneyApi?.largest)} $`,
+              label: `Số tiền lớn nhất null $`,
               data: data,
             },
           ],

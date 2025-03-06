@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
 import { dataUSDI } from "../../../../../interface/HomeI/StartTradingHomeI/StartTradingHomeType";
 import api from "../../../../../api/axios";
 import LoadDingPage from "../../../../../common/components/loadingPage/LoadingPage";
+import ThemeContext from "../../../../../context/FoodContext";
 
 interface InfomationProps {
 
@@ -11,8 +12,7 @@ interface InfomationProps {
 const Infomation: React.FC<InfomationProps> = () => {
     const [usdData, setUsdData] = useState<dataUSDI | null>(null); // USDT hiện tại
     const [isLoading, setIsLoading] = useState(false);
-
-
+    const { setUsdcurrent } = useContext(ThemeContext);
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
@@ -20,6 +20,7 @@ const Infomation: React.FC<InfomationProps> = () => {
                 const response = await api.get("/my-infomation");
                 if (response?.status === 200) {
                     setUsdData(response?.data);
+                    setUsdcurrent(response?.data.USDT?.total)
                 }
             } catch (err) {
                 console.error("🚀 ~ useEffect ~ error:", err);

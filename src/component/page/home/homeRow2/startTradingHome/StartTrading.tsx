@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Select from "../../../../../common/components/select/Select";
 import Modal from "../../../../../common/components/modal/Modal";
 import ModalStart from "./ModalStart";
@@ -9,19 +9,69 @@ import ThemeContext from "../../../../../context/FoodContext";
 import Folding from "./Folding";
 import Infomation from "./Infomation";
 import { handleFodingToMoney } from "../../../../../common/utils/handleFodingToMoney";
+import axios from "axios";
 
 const optionsChicken: string[] = ["10", "20", "30"];
 
+interface getStartTrading {
+  _id?: string,
+  isTrading: boolean,
+  foldingCurrent: number,
+  largestMoney?: number,
+  totalAmount: number,
+  moneyfodingOne: number,
+  isActiveExecuteTrade: boolean,
+  isWaitingForCompletion: boolean,
+  tradeRate: number,
+  idOrderMain: string,
+  idStopLossOrder: string,
+  idTakeProfitOrder: string,
+
+}
 const StartTrading: React.FC = () => {
   const chickenType = localStorage.getItem("chickenType") || "10"; // %
   const [chicken, setChicken] = useState<string>(chickenType); // Số tiền sẽ cươc
   const [isModal, setIsModal] = useState(false);
+  const [resultSttatusTrading, setResultSttatusTrading] = useState<getStartTrading | null>(null);
+  const { usdcurrent } = useContext(ThemeContext);
 
-  const { largestMoneyApi, isTrade, setIsTrade, isWaitingForCompletion, setisWaiting, foldingCurrent } = useContext(ThemeContext);
-  const largestMoney = largestMoneyApi?.largest;
 
-  const totalAmount = (Number(largestMoney) / 100) * Number(chickenType) || 0; // Số tiền lớn nhất ,Số tiền sẽ cược 
-  const moneyOne = totalAmount && foldingCurrent ? handleFodingToMoney(totalAmount, foldingCurrent) : 0;
+  const setInitStartTrading = async () => {
+    try {
+      const response = await api.post("status/start-trading", {
+        tradeRate: chicken,
+        largestMoney: usdcurrent,
+        isTrading: false
+      });
+      if (response?.status === 201) {
+        getStartTrading();
+      }
+    } catch (error) {
+    }
+  }
+
+
+  const getStartTrading = async () => {
+    try {
+      const response = await api.get("status/start-trading-get");
+      if (response?.status === 200) {
+        if (response?.data?.data?.length > 0) {
+          setResultSttatusTrading(response?.data?.data[0]);
+        } else {
+          if (Number(usdcurrent) > 0) {
+            setInitStartTrading();  // Gọi khi chưa bắt đầu giao dịch
+          }
+        }
+      }
+    } catch (error) {
+    }
+  };
+
+  useEffect(() => {
+    getStartTrading();
+  }, [usdcurrent]);
+
+
 
   const handleChickenTypeChange = (chicken: string) => {
     localStorage.setItem("chickenType", chicken);
@@ -32,37 +82,69 @@ const StartTrading: React.FC = () => {
     setIsModal(false);
   };
 
+
+
+  const handleIsWaiting = async () => {
+    try {
+      const response = await api.post("status/stop-trading");
+      response?.status === 201 && getStartTrading()
+    } catch (error) {
+      alert(`Hủy bỏ trạng thái giao dịch thất baị`)
+    }
+  };
+
+
+  const largestMoney = resultSttatusTrading?.largestMoney
+  const totalAmount = (Number(largestMoney) / 100) * Number(chickenType) || 0;
+
   const confirmModal = () => {
     setIsModal(false);
-    if (isTrade) {
-      setisWaiting(true);
-      stopTrading();
+    if (resultSttatusTrading?.isTrading && !resultSttatusTrading?.isWaitingForCompletion) {
+      handleIsWaiting()
     }
-    startTrading();
+    if (!resultSttatusTrading?.isTrading && !resultSttatusTrading?.isWaitingForCompletion && !resultSttatusTrading?.isActiveExecuteTrade) {
+      startTrading();
+    }
   };
 
   const startTrading = async () => {
-    try {
-      const response = await api.post("status/start-trading", {
-        tradeRate: chicken,
-        largestMoney: largestMoney,
-      });
-      console.log("response",response)
-      response?.status === 201 && setIsTrade(true);
-    } catch (error) {
-      setIsTrade(false);
-      console.log("API status/start-trading", error);
+    if (resultSttatusTrading?._id) {
+      try {
+        const moneyfodingOne = handleFodingToMoney(totalAmount, 1);
+        const giabtc = await axios.get('https://testnet.binance.vision/api/v3/ticker/price', {
+          params: {
+            symbol: 'BTCUSDT', // BTC/USDT pair
+          },
+        });
+
+        const btcPrice = (giabtc.data.price)
+        const amount = moneyfodingOne / (1000 * 10);
+
+        const minMoneyfodingOne = (btcPrice * 0.0013 * 10000) / btcPrice 
+
+        if (amount > 0.0013 && moneyfodingOne > minMoneyfodingOne) {
+          const payload = {
+            isTrading: true,
+            tradeRate: Number(chicken),
+            moneyfodingOne,
+            totalAmount
+          }
+          const response = await api.put(`status/${resultSttatusTrading?._id.toString()}`, payload);
+          console.log("update", response);
+          response.status === 200 && getStartTrading()
+
+        } else {
+          alert(`Số tiền phải lớn hơn ${minMoneyfodingOne} $ hiện tại là ${moneyfodingOne}`)
+        }
+
+      } catch (error) { alert(`Start Thất bại`) }
+    } else {
+      alert(`Start Thất bại`)
     }
+
   };
 
-  const stopTrading = async () => {
-    try {
-      const response = await api.post("status/stop-trading");
-      response?.status === 201 && setIsTrade(false);
-    } catch (error) {
-      console.log("API status/stop-trading", error);
-    }
-  };
+
 
 
   return (
@@ -77,22 +159,22 @@ const StartTrading: React.FC = () => {
               options={optionsChicken}
               value={chicken}
               onChange={handleChickenTypeChange}
-              disabled={isTrade || isWaitingForCompletion}
+              disabled={resultSttatusTrading?.isTrading || resultSttatusTrading?.isWaitingForCompletion}
             />
           </Folding>
 
           <div className="mt-5">
-            {isWaitingForCompletion ? (
+            {resultSttatusTrading?.isWaitingForCompletion ? (
               <Button text="Đang chờ hoàn tất ...">
                 <IconLoading />
               </Button>
             ) : (
               <Button
-                text={isTrade ? "Stop Trading" : "Start Trading"}
-                classCT={`${isTrade ? "bg-red-300 hover:bg-red-700" : "bg-yellowCT hover:bg-yellow-200 "} text-grayInButtonYellow`}
+                text={resultSttatusTrading?.isTrading ? "Stop Trading" : "Start Trading"}
+                classCT={`${resultSttatusTrading?.isTrading ? "bg-red-300 hover:bg-red-700" : "bg-yellowCT hover:bg-yellow-200 "} text-grayInButtonYellow`}
                 onClick={() => setIsModal(true)}
               >
-                {isTrade && (
+                {resultSttatusTrading?.isTrading && (
                   <span className="relative flex h-7 w-7 ml-2 translate-y-0.5 translate-x-3">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-700 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-7 w-7 bg-red-500"></span>
@@ -102,18 +184,28 @@ const StartTrading: React.FC = () => {
             )}
           </div>
 
+          <div>
+            <div>foldingCurrent : {resultSttatusTrading?.foldingCurrent}</div>
+            <div>isTrading status: {resultSttatusTrading?.isTrading ? "true" : "false"}</div>
+            <div>isWaitingForCompletion: {resultSttatusTrading?.isWaitingForCompletion ? "true" : "false"}</div>
+            <div>isActiveExecuteTrade: {resultSttatusTrading?.isActiveExecuteTrade ? "Vào  tiền" : "Chưa vào tiền"}</div>
+            <div>moneyfodingOne: {resultSttatusTrading?.moneyfodingOne} $</div>
+            <div>totalAmount : {resultSttatusTrading?.totalAmount} $</div>
+            <div>tradeRate : {resultSttatusTrading?.tradeRate} %</div>
+
+          </div>
         </div>
       </div>
       {isModal && (
         <Modal
           closeModal={closeModal}
           confirmModal={confirmModal}
-          title={isTrade ? "Bạn muốn STOP Trading ?" : "Bạn có chắc chắn Start Trading ?"}
-          classCT={isTrade ? "bg-red-600" : "bg-yellowCT text-gray-600"}
-          textOK={isTrade ? "STOP" : "START"}
+          title={resultSttatusTrading?.isTrading ? "Bạn muốn STOP Trading ?" : "Bạn có chắc chắn Start Trading ?"}
+          classCT={resultSttatusTrading?.isTrading ? "bg-red-600" : "bg-yellowCT text-gray-600"}
+          textOK={resultSttatusTrading?.isTrading ? "STOP" : "START"}
         >
           <ModalStart
-            isTrade={isTrade}
+            isTrade={resultSttatusTrading?.isTrading}
             chicken={chicken}
             money={totalAmount}
           />

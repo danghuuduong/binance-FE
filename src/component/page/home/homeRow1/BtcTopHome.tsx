@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import { CandlestickDataI } from "../../../../interface/HomeI/candlestickDataI";
 import LoadDingPage from "../../../../common/components/loadingPage/LoadingPage";
 import { formatNumber } from "../../../../common/utils/utilCovert";
+import abc from "../../../../assets/notifyOrderPlaced.mp3";
 
 const BtcTopHome: React.FC = () => {
   const [data, setData] = useState<CandlestickDataI | null>(null);
@@ -46,6 +47,28 @@ const BtcTopHome: React.FC = () => {
         return "Không cắt nhau";
     }
   };
+
+  const orderNotification = () => {
+
+    if (data?.messenger !== "null" && data?.messenger !== undefined) {
+      console.log(`Có biến khi vào tiền ${data?.messenger}`);
+      return
+    }
+  };
+  orderNotification()
+
+  const notifyOrderPlaced = () => {
+
+    if (data?.isWaitingForCompletionStatus) {
+      console.log("Đã vào lệnh");
+      // alert("Đã vào lệnh");
+      return
+    }
+  };
+
+  notifyOrderPlaced()
+
+
   return (
     <>
       {isLoading && <LoadDingPage />}
@@ -113,8 +136,8 @@ const BtcTopHome: React.FC = () => {
           </div>
 
           <div>
-            <div className="text-grayTextCT">IsTrading</div>
-            <div>{`${data?.statusTrading}`}</div>
+            <div className="text-grayTextCT">messenger</div>
+            <div>{`${data?.messenger}`}</div>
           </div>
 
         </div>

@@ -5,7 +5,7 @@ import IconLoading from "../../../../../common/components/iconLoading/IconLoadin
 import { handleFodingToMoney } from "../../../../../common/utils/handleFodingToMoney";
 
 interface StartTradingHandleProps {
-  largest: string | undefined;
+  largest: number | null | undefined;
   children: React.ReactNode;
   money: number;
 }
@@ -16,7 +16,7 @@ const Foldin: React.FC<StartTradingHandleProps> = ({
   money,
 }) => {
 
-  const { foldingCurrent,isTrade } = useContext(ThemeContext);
+  const { foldingCurrent, isTrade } = useContext(ThemeContext);
 
   const foldingList = [
     { folding: "1", value: handleFodingToMoney(money, 1) },
@@ -56,7 +56,7 @@ const Foldin: React.FC<StartTradingHandleProps> = ({
                 <li key={item.folding} className={`mt-2 flex items-center ${foldingCurrent == Number(item.folding) ? "text-green-500 font-bold" : "text-grayTextCT"}`}>
                   <span>Thếp {item.folding} :</span>
                   <span className="ml-2"> {handleParseFloat2(handleFodingToMoney(money, Number(item.folding)))} $</span>
-                  {isTrade &&foldingCurrent == Number(item.folding) && <span><IconLoading size={7} /></span>}
+                  {isTrade && foldingCurrent == Number(item.folding) && <span><IconLoading size={7} /></span>}
                 </li>
               );
             })}
