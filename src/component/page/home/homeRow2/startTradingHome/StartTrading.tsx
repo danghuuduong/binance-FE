@@ -10,6 +10,7 @@ import Folding from "./Folding";
 import Infomation from "./Infomation";
 import { handleFodingToMoney } from "../../../../../common/utils/handleFodingToMoney";
 import axios from "axios";
+import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
 
 const optionsChicken: string[] = ["10", "20", "30"];
 
@@ -118,11 +119,11 @@ const StartTrading: React.FC = () => {
         });
 
         const btcPrice = (giabtc.data.price)
-        const amount = moneyfodingOne / (1000 * 10);
+        const amount = moneyfodingOne / (1000); // 0.002
 
-        const minMoneyfodingOne = (btcPrice * 0.0013 * 10000) / btcPrice 
+        const khoiluong = amount * btcPrice
 
-        if (amount > 0.0013 && moneyfodingOne > minMoneyfodingOne) {
+        if (amount >= 0.003 && khoiluong > 269) {
           const payload = {
             isTrading: true,
             tradeRate: Number(chicken),
@@ -130,11 +131,10 @@ const StartTrading: React.FC = () => {
             totalAmount
           }
           const response = await api.put(`status/${resultSttatusTrading?._id.toString()}`, payload);
-          console.log("update", response);
           response.status === 200 && getStartTrading()
-
+          alert(`đã vào lệnh :${moneyfodingOne} khoảng : ${amount} BTC và ${khoiluong} khối lượng ,với số tiền ${moneyfodingOne}`)
         } else {
-          alert(`Số tiền phải lớn hơn ${minMoneyfodingOne} $ hiện tại là ${moneyfodingOne}`)
+          alert(`Số tiền phải lớn hơn ${handleParseFloat2(0.003 * 1000)}$ và khối lượng là 269 $.\n Hiện tại Số tiền là : ${handleParseFloat2(moneyfodingOne)} khối lượng dự kiến là:${handleParseFloat2(khoiluong)} `)
         }
 
       } catch (error) { alert(`Start Thất bại`) }
