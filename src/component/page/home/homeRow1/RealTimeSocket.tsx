@@ -49,16 +49,6 @@ const RealTimeSocket: React.FC = () => {
 
   const sortedAndReversedOrders = [...takeProfitOrders, ...otherOrders];
 
-  const givenTimestamp = 1741683901627;
-  const currentTime = Date.now();
-  const fiveMinutesInMillis = 1 * 60 * 1000;
-  const is1phut = currentTime - givenTimestamp > fiveMinutesInMillis;
-
-  if (is1phut && positions && openOrders.length === 0 && !isendApi.current ) {
-    console.log("vo");
-    isendApi.current = true
-  }
-
   return (
     <>
       {isLoading && <LoadDingPage />}
@@ -110,7 +100,7 @@ const RealTimeSocket: React.FC = () => {
             <div className="text-grayTextCT"> PNL(ROI %) </div>
             <div
               className={`${
-                positions?.info?.positionAmt > 0
+                positions?.info?.unRealizedProfit > 0
                   ? "text-green-400"
                   : "text-red-400"
               }`}
@@ -131,7 +121,7 @@ const RealTimeSocket: React.FC = () => {
                 return (
                   <div key={value.id}>
                     <span>
-                      {!isSL && positions.side === "long" ? ">=" : "<="}
+                      {!isSL && positions?.side === "long" ? ">=" : "<="}
                     </span>
                     <span className="ml-2">{value.stopPrice}</span>
                     <span className="ml-2">{isSL ? "Chốt SL" : "Chốt TP"}</span>

@@ -11,16 +11,18 @@ import Infomation from "./Infomation";
 import { handleFodingToMoney } from "../../../../../common/utils/handleFodingToMoney";
 import axios from "axios";
 import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
-import ResultTradingfromApi from "./resultTradingfromApi";
 import { getStartTrading } from "../../../../../interface/HomeI/StartTradingHomeI/StartTradingHomeType";
+import ResultTradingfromApi from "./ResultTradingfromApi";
 
-const optionsChicken: number[] = [10, 20, 30];
+const optionsChicken: number[] = [10, 20, 30, 50];
 
 const StartTrading: React.FC = () => {
-  const [chicken, setChicken] = useState<number>(10); // Số tiền sẽ cươc
+  const [chicken, setChicken] = useState<number>(10);
   const [isModal, setIsModal] = useState(false);
-  const [resultSttatusTrading, setResultSttatusTrading] =useState<getStartTrading | null>(null);
+  const [resultSttatusTrading, setResultSttatusTrading] = useState<getStartTrading | null>(null);
   const { usdcurrent } = useContext(ThemeContext);
+
+  console.log("resultSttatusTrading", resultSttatusTrading);
 
   const setInitStartTrading = async () => {
     try {
@@ -32,7 +34,7 @@ const StartTrading: React.FC = () => {
       if (response?.status === 201) {
         getStartTrading();
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const getStartTrading = async () => {
@@ -48,7 +50,7 @@ const StartTrading: React.FC = () => {
           }
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -145,8 +147,7 @@ const StartTrading: React.FC = () => {
   return (
     <>
       <div>
-        <div className="text-2xl font-medium text-center ">
-          {" "}
+        <div className="text-2xl font-medium text-center font">
           Bắt Đầu Trading tool
         </div>
         <div className="mt-12">
@@ -161,6 +162,7 @@ const StartTrading: React.FC = () => {
               options={optionsChicken}
               value={chicken}
               onChange={handleChickenTypeChange}
+              resultSttatusTrading={resultSttatusTrading}
               disabled={
                 resultSttatusTrading?.isTrading ||
                 resultSttatusTrading?.isWaitingForCompletion
@@ -180,11 +182,10 @@ const StartTrading: React.FC = () => {
                     ? "Stop Trading"
                     : "Start Trading"
                 }
-                classCT={`${
-                  resultSttatusTrading?.isTrading
-                    ? "bg-red-300 hover:bg-red-700"
-                    : "bg-yellowCT hover:bg-yellow-200 "
-                } text-grayInButtonYellow`}
+                classCT={`${resultSttatusTrading?.isTrading
+                  ? "bg-red-300 hover:bg-red-700"
+                  : "bg-yellowCT hover:bg-yellow-200 "
+                  } text-grayInButtonYellow`}
                 onClick={() => setIsModal(true)}
               >
                 {resultSttatusTrading?.isTrading && (

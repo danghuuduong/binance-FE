@@ -8,6 +8,7 @@ interface ModalPopI {
   colorBT?: string;
   classCT?: string;
   textOK?: string;
+  textCancel?: string
 }
 
 const Modal: React.FC<ModalPopI> = ({
@@ -17,6 +18,7 @@ const Modal: React.FC<ModalPopI> = ({
   confirmModal,
   classCT,
   textOK,
+  textCancel,
 }) => {
   return (
     <div
@@ -72,19 +74,20 @@ const Modal: React.FC<ModalPopI> = ({
             </>
             <div>{children}</div>
             <div className="text-center mt-8">
-              <button
+              {textOK && <button
                 onClick={confirmModal}
                 type="button"
                 className={`${classCT} outline-none border-none  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center hover:scale-105 duration-200`}
               >
                 {textOK || "Yes, I'm sure"}
-              </button>
+              </button>}
+             
               <button
                 type="button"
                 className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 border-none bg-white rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 hover:scale-105 duration-200"
                 onClick={closeModal}
               >
-                NO
+                {textCancel ? textCancel : "No"}
               </button>
             </div>
           </div>

@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
 import ThemeContext from "../../../../../context/FoodContext";
 import IconLoading from "../../../../../common/components/iconLoading/IconLoading";
 import { handleFodingToMoney } from "../../../../../common/utils/handleFodingToMoney";
+import Modal from "../../../../../common/components/modal/Modal";
 
 interface StartTradingHandleProps {
   largest: number | null | undefined;
@@ -18,7 +19,7 @@ const Folding: React.FC<StartTradingHandleProps> = ({
   folding,
 }) => {
   const { foldingCurrent, isTrade } = useContext(ThemeContext);
-  
+
   const foldingList = [
     { folding: 1, value: handleFodingToMoney(money, 1) },
     { folding: 2, value: handleFodingToMoney(money, 2) },
@@ -26,6 +27,9 @@ const Folding: React.FC<StartTradingHandleProps> = ({
     { folding: 4, value: handleFodingToMoney(money, 4) },
     { folding: 5, value: handleFodingToMoney(money, 5) },
   ];
+
+
+  const [isModal, setIsModal] = useState(false);
 
   return (
     <>
@@ -40,8 +44,25 @@ const Folding: React.FC<StartTradingHandleProps> = ({
         <div className="text-grayTextCT mt-3 flex items-center">
           <span> Tiền Trade :</span>
           {children}
-          <span className="ml-2 text-whiteCT font-medium">%</span>
+          <span className="ml-2 text-whiteCT font-medium cursor-pointer" title="các"  onClick={() => setIsModal(true)}>Tìm hiểu (?)</span>
         </div>
+
+        {
+          isModal && <Modal
+            closeModal={() => setIsModal(!isModal)}
+            confirmModal={() => setIsModal(!isModal)}
+            title={"Bạn muốn STOP Trading ?"}
+            classCT={"bg-red-600"}
+            textCancel="Đóng"
+          >
+            <div className="text-align">
+              <div>1. Trên 500 $ sẽ không được chọn 50% nữa </div>
+              <div>2. Trên 1000 $ sẽ không được chọn 30% nữa </div>
+            </div>
+          </Modal>
+        }
+
+
 
         <div className="text-grayTextCT mt-1 flex items-center">
           Số tiền Trade ( Gà ) :
@@ -56,11 +77,10 @@ const Folding: React.FC<StartTradingHandleProps> = ({
               return (
                 <li
                   key={item.folding}
-                  className={`mt-2 flex items-center ${
-                    folding == item.folding
-                      ? "text-green-500 font-bold"
-                      : "text-grayTextCT"
-                  }`}
+                  className={`mt-2 flex items-center ${folding == item.folding
+                    ? "text-green-500 font-bold"
+                    : "text-grayTextCT"
+                    }`}
                 >
                   <span>Thếp {item.folding} :</span>
                   <span className="ml-2">

@@ -15,7 +15,7 @@ function TradingViewWidget() {
           "autosize": true,
           "height": "700",
           "symbol": "BINANCE:BTCUSD",
-          "interval": "60",
+          "interval": "15",
           "timezone": "Etc/UTC",
           "theme": "dark",
           "style": "1",
@@ -24,22 +24,19 @@ function TradingViewWidget() {
           "allow_symbol_change": true,
           "calendar": false,
            "studies": [
-            "STD;EMA",
-            "STD;EMA"
-            
+           "STD;MA%Ribbon"
           ],
           "hide_side_toolbar": false,           
           "support_host": "https://www.tradingview.com"
-          
         }`;
 
       if (container?.current) {
-        container.current.appendChild(script);
+        container?.current?.appendChild(script);
       }
 
       return () => {
         if (container?.current) {
-          container?.current.removeChild(script);
+          container?.current?.removeChild(script);
         }
       };
     }, []);
