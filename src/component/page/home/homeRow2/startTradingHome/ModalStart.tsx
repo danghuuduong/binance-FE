@@ -5,7 +5,7 @@ import { handleFodingToMoney } from "../../../../../common/utils/handleFodingToM
 
 interface ModalStartTradingHomeI {
     isTrade?: boolean;
-    chicken?: string;
+    chicken?: number;
     money?: string | number
 }
 

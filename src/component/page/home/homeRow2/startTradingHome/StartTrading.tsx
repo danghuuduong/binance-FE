@@ -11,46 +11,29 @@ import Infomation from "./Infomation";
 import { handleFodingToMoney } from "../../../../../common/utils/handleFodingToMoney";
 import axios from "axios";
 import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
+import ResultTradingfromApi from "./resultTradingfromApi";
+import { getStartTrading } from "../../../../../interface/HomeI/StartTradingHomeI/StartTradingHomeType";
 
-const optionsChicken: string[] = ["10", "20", "30"];
+const optionsChicken: number[] = [10, 20, 30];
 
-interface getStartTrading {
-  _id?: string,
-  isTrading: boolean,
-  foldingCurrent: number,
-  largestMoney?: number,
-  totalAmount: number,
-  moneyfodingOne: number,
-  isActiveExecuteTrade: boolean,
-  isWaitingForCompletion: boolean,
-  tradeRate: number,
-  idOrderMain: string,
-  idStopLossOrder: string,
-  idTakeProfitOrder: string,
-
-}
 const StartTrading: React.FC = () => {
-  const chickenType = localStorage.getItem("chickenType") || "10"; // %
-  const [chicken, setChicken] = useState<string>(chickenType); // Số tiền sẽ cươc
+  const [chicken, setChicken] = useState<number>(10); // Số tiền sẽ cươc
   const [isModal, setIsModal] = useState(false);
-  const [resultSttatusTrading, setResultSttatusTrading] = useState<getStartTrading | null>(null);
+  const [resultSttatusTrading, setResultSttatusTrading] =useState<getStartTrading | null>(null);
   const { usdcurrent } = useContext(ThemeContext);
-
 
   const setInitStartTrading = async () => {
     try {
       const response = await api.post("status/start-trading", {
         tradeRate: chicken,
         largestMoney: usdcurrent,
-        isTrading: false
+        isTrading: false,
       });
       if (response?.status === 201) {
         getStartTrading();
       }
-    } catch (error) {
-    }
-  }
-
+    } catch (error) {}
+  };
 
   const getStartTrading = async () => {
     try {
@@ -58,24 +41,21 @@ const StartTrading: React.FC = () => {
       if (response?.status === 200) {
         if (response?.data?.data?.length > 0) {
           setResultSttatusTrading(response?.data?.data[0]);
+          setChicken(response?.data?.data[0].tradeRate);
         } else {
           if (Number(usdcurrent) > 0) {
-            setInitStartTrading();  // Gọi khi chưa bắt đầu giao dịch
+            setInitStartTrading(); // Gọi khi chưa bắt đầu giao dịch
           }
         }
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
     getStartTrading();
   }, [usdcurrent]);
 
-
-
-  const handleChickenTypeChange = (chicken: string) => {
-    localStorage.setItem("chickenType", chicken);
+  const handleChickenTypeChange = (chicken: number) => {
     setChicken(chicken);
   };
 
@@ -83,27 +63,31 @@ const StartTrading: React.FC = () => {
     setIsModal(false);
   };
 
-
-
   const handleIsWaiting = async () => {
     try {
       const response = await api.post("status/stop-trading");
-      response?.status === 201 && getStartTrading()
+      response?.status === 201 && getStartTrading();
     } catch (error) {
-      alert(`Hủy bỏ trạng thái giao dịch thất baị`)
+      alert(`Hủy bỏ trạng thái giao dịch thất baị`);
     }
   };
 
-
-  const largestMoney = resultSttatusTrading?.largestMoney
-  const totalAmount = (Number(largestMoney) / 100) * Number(chickenType) || 0;
+  const largestMoney = resultSttatusTrading?.largestMoney;
+  const totalAmount = (Number(largestMoney) / 100) * Number(chicken) || 0;
 
   const confirmModal = () => {
     setIsModal(false);
-    if (resultSttatusTrading?.isTrading && !resultSttatusTrading?.isWaitingForCompletion) {
-      handleIsWaiting()
+    if (
+      resultSttatusTrading?.isTrading &&
+      !resultSttatusTrading?.isWaitingForCompletion
+    ) {
+      handleIsWaiting();
     }
-    if (!resultSttatusTrading?.isTrading && !resultSttatusTrading?.isWaitingForCompletion && !resultSttatusTrading?.isActiveExecuteTrade) {
+    if (
+      !resultSttatusTrading?.isTrading &&
+      !resultSttatusTrading?.isWaitingForCompletion &&
+      !resultSttatusTrading?.isActiveExecuteTrade
+    ) {
       startTrading();
     }
   };
@@ -112,54 +96,75 @@ const StartTrading: React.FC = () => {
     if (resultSttatusTrading?._id) {
       try {
         const moneyfodingOne = handleFodingToMoney(totalAmount, 1);
-        const giabtc = await axios.get('https://testnet.binance.vision/api/v3/ticker/price', {
-          params: {
-            symbol: 'BTCUSDT', // BTC/USDT pair
-          },
-        });
+        const giabtc = await axios.get(
+          "https://testnet.binance.vision/api/v3/ticker/price",
+          {
+            params: {
+              symbol: "BTCUSDT", // BTC/USDT pair
+            },
+          }
+        );
 
-        const btcPrice = (giabtc.data.price)
-        const amount = moneyfodingOne / (1000); // 0.002
+        const btcPrice = giabtc.data.price;
+        const amount = moneyfodingOne / 1000; // 0.002
 
-        const khoiluong = amount * btcPrice
+        const khoiluong = amount * btcPrice;
 
         if (amount >= 0.003 && khoiluong > 269) {
           const payload = {
             isTrading: true,
             tradeRate: Number(chicken),
             moneyfodingOne,
-            totalAmount
-          }
-          const response = await api.put(`status/${resultSttatusTrading?._id.toString()}`, payload);
-          response.status === 200 && getStartTrading()
-          alert(`đã vào lệnh :${moneyfodingOne} khoảng : ${amount} BTC và ${khoiluong} khối lượng ,với số tiền ${moneyfodingOne}`)
+            totalAmount,
+          };
+          const response = await api.put(
+            `status/${resultSttatusTrading?._id.toString()}`,
+            payload
+          );
+          response.status === 200 && getStartTrading();
+          alert(
+            `đã vào lệnh :${moneyfodingOne} khoảng : ${amount} BTC và ${khoiluong} khối lượng ,với số tiền ${moneyfodingOne}`
+          );
         } else {
-          alert(`Số tiền phải lớn hơn ${handleParseFloat2(0.003 * 1000)}$ và khối lượng là 269 $.\n Hiện tại Số tiền là : ${handleParseFloat2(moneyfodingOne)} khối lượng dự kiến là:${handleParseFloat2(khoiluong)} `)
+          alert(
+            `Số tiền phải lớn hơn ${handleParseFloat2(
+              0.003 * 1000
+            )}$ và khối lượng là 269 $.\n Hiện tại Số tiền là : ${handleParseFloat2(
+              moneyfodingOne
+            )} khối lượng dự kiến là:${handleParseFloat2(khoiluong)} `
+          );
         }
-
-      } catch (error) { alert(`Start Thất bại`) }
+      } catch (error) {
+        alert(`Start Thất bại`);
+      }
     } else {
-      alert(`Start Thất bại`)
+      alert(`Start Thất bại`);
     }
-
   };
-
-
-
 
   return (
     <>
       <div>
-        <div className="text-2xl font-medium text-center "> Bắt Đầu Trading tool</div>
+        <div className="text-2xl font-medium text-center ">
+          {" "}
+          Bắt Đầu Trading tool
+        </div>
         <div className="mt-12">
           <Infomation />
 
-          <Folding largest={largestMoney} money={totalAmount}>
+          <Folding
+            largest={largestMoney}
+            money={totalAmount}
+            folding={resultSttatusTrading?.foldingCurrent}
+          >
             <Select
               options={optionsChicken}
               value={chicken}
               onChange={handleChickenTypeChange}
-              disabled={resultSttatusTrading?.isTrading || resultSttatusTrading?.isWaitingForCompletion}
+              disabled={
+                resultSttatusTrading?.isTrading ||
+                resultSttatusTrading?.isWaitingForCompletion
+              }
             />
           </Folding>
 
@@ -170,8 +175,16 @@ const StartTrading: React.FC = () => {
               </Button>
             ) : (
               <Button
-                text={resultSttatusTrading?.isTrading ? "Stop Trading" : "Start Trading"}
-                classCT={`${resultSttatusTrading?.isTrading ? "bg-red-300 hover:bg-red-700" : "bg-yellowCT hover:bg-yellow-200 "} text-grayInButtonYellow`}
+                text={
+                  resultSttatusTrading?.isTrading
+                    ? "Stop Trading"
+                    : "Start Trading"
+                }
+                classCT={`${
+                  resultSttatusTrading?.isTrading
+                    ? "bg-red-300 hover:bg-red-700"
+                    : "bg-yellowCT hover:bg-yellow-200 "
+                } text-grayInButtonYellow`}
                 onClick={() => setIsModal(true)}
               >
                 {resultSttatusTrading?.isTrading && (
@@ -183,25 +196,25 @@ const StartTrading: React.FC = () => {
               </Button>
             )}
           </div>
-
-          <div>
-            <div>foldingCurrent : {resultSttatusTrading?.foldingCurrent}</div>
-            <div>isTrading status: {resultSttatusTrading?.isTrading ? "true" : "false"}</div>
-            <div>isWaitingForCompletion: {resultSttatusTrading?.isWaitingForCompletion ? "true" : "false"}</div>
-            <div>isActiveExecuteTrade: {resultSttatusTrading?.isActiveExecuteTrade ? "Vào  tiền" : "Chưa vào tiền"}</div>
-            <div>moneyfodingOne: {resultSttatusTrading?.moneyfodingOne} $</div>
-            <div>totalAmount : {resultSttatusTrading?.totalAmount} $</div>
-            <div>tradeRate : {resultSttatusTrading?.tradeRate} %</div>
-
-          </div>
+          {resultSttatusTrading && (
+            <ResultTradingfromApi resultSttatusTrading={resultSttatusTrading} />
+          )}
         </div>
       </div>
       {isModal && (
         <Modal
           closeModal={closeModal}
           confirmModal={confirmModal}
-          title={resultSttatusTrading?.isTrading ? "Bạn muốn STOP Trading ?" : "Bạn có chắc chắn Start Trading ?"}
-          classCT={resultSttatusTrading?.isTrading ? "bg-red-600" : "bg-yellowCT text-gray-600"}
+          title={
+            resultSttatusTrading?.isTrading
+              ? "Bạn muốn STOP Trading ?"
+              : "Bạn có chắc chắn Start Trading ?"
+          }
+          classCT={
+            resultSttatusTrading?.isTrading
+              ? "bg-red-600"
+              : "bg-yellowCT text-gray-600"
+          }
           textOK={resultSttatusTrading?.isTrading ? "STOP" : "START"}
         >
           <ModalStart

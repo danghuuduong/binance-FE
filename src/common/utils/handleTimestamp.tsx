@@ -2,13 +2,12 @@ const handleTimestamp = (timestamp: any) => {
   const validTimestamp = Number(timestamp);
 
   if (isNaN(validTimestamp)) {
-      console.error('Invalid timestamp:', timestamp);
       return 'Invalid Date';
   }
 
-  const formattedDate = new Date(validTimestamp).toLocaleString('en-US', {
-      month: 'numeric',
+  const formattedDate = new Date(validTimestamp).toLocaleString('en-GB', {
       day: 'numeric',
+      month: 'numeric',
       year: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
@@ -18,4 +17,5 @@ const handleTimestamp = (timestamp: any) => {
 
   return formattedDate;
 };
+
 export { handleTimestamp };

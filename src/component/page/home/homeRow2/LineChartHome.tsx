@@ -10,7 +10,7 @@ const LineChartHome: React.FC = () => {
   const data = historyList?.map((value) => parseInt(`${handleParseFloat2(value,0)}`, 10)) || []
 
   return (
-    <div className="">
+    <div className="px-28">
       <div className="text-2xl font-medium ">The amount changes</div>
       <TEChart
         type="line"

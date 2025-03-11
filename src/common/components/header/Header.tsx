@@ -12,8 +12,8 @@ const items = [
     key: "/candlestickHistory",
   },
   {
-    label: "Biến động số dư",
-    key: "/moneyHistory",
+    label: "Lịch sử Tool cho lệnh",
+    key: "/ema",
   },
   {
     label: "Liên hệ",

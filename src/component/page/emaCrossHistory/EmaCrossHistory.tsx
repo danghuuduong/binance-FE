@@ -17,7 +17,7 @@ const EmaCrossHistory: React.FC = () => {
   }
   return (
     <div className="h-[100%]">
-      <h1 className="font-[700]">EMA Cross Orver History</h1>
+      <h1 className="font-[700]">Lịch sử Tool cho lệnh</h1>
       <div className="flex flex-col justify-between h-[100%]">
         <div>
           <div className="relative overflow-y-auto rounded-lg mt-4">
@@ -25,7 +25,7 @@ const EmaCrossHistory: React.FC = () => {
               <thead className="text-xs text-white uppercase bg-grayBody ">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    Ema Cắt nhau
+                    Tool cho lệnh
                   </th>
 
                   <th scope="col" className="px-6 py-3">
@@ -51,7 +51,7 @@ const EmaCrossHistory: React.FC = () => {
                   return (
                     <tr className={`${index !== emaCrossHistoryList.length - 1 ? 'border-b' : ''} border-[#3d3d3d] bg-gray-600 text-white`} key={value._id} >
                       <th className="px-6 py-4 ">
-                        {value.cross === "up" ? "EMA 9 cross EMA 25 Từ dưới lên" : "EMA 9 cross EMA 25 Từ trên xuống"}
+                        <span className={`${value.cross === "up" ? "text-green-500" : "text-red-500"}`}> {value.cross === "up" ? "Long" : "Short"}</span>
                       </th>
 
                       <td className="px-6 py-4">
@@ -66,7 +66,7 @@ const EmaCrossHistory: React.FC = () => {
                       </td>
 
                       <td className="px-6 py-4">
-                        {value.isActiveExecuteTrade ? "Is Trading" : "-"}
+                        {value.isActiveExecuteTrade ? "Vào tiền tại đây" : "Không vào tiền , đang có Vị thế"}
                       </td>
                     </tr>
                   );
@@ -75,7 +75,7 @@ const EmaCrossHistory: React.FC = () => {
             </table>
           </div>
         </div>
-        <div className="flex justify-center  translate-y-[-15px]">
+        <div className="flex justify-center  translate-y-[10px]">
           <Pagination totalPages={totalPages} handlegetPage={handlegetPage} />
         </div>
       </div>

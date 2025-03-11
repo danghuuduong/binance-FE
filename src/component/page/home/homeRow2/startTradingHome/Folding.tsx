@@ -1,4 +1,4 @@
-import { useContext, } from "react";
+import { useContext } from "react";
 import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
 import ThemeContext from "../../../../../context/FoodContext";
 import IconLoading from "../../../../../common/components/iconLoading/IconLoading";
@@ -8,22 +8,23 @@ interface StartTradingHandleProps {
   largest: number | null | undefined;
   children: React.ReactNode;
   money: number;
+  folding?: number;
 }
 
-const Foldin: React.FC<StartTradingHandleProps> = ({
+const Folding: React.FC<StartTradingHandleProps> = ({
   largest,
   children,
   money,
+  folding,
 }) => {
-
   const { foldingCurrent, isTrade } = useContext(ThemeContext);
-
+  
   const foldingList = [
-    { folding: "1", value: handleFodingToMoney(money, 1) },
-    { folding: "2", value: handleFodingToMoney(money, 2) },
-    { folding: "3", value: handleFodingToMoney(money, 3) },
-    { folding: "4", value: handleFodingToMoney(money, 4) },
-    { folding: "5", value: handleFodingToMoney(money, 5) },
+    { folding: 1, value: handleFodingToMoney(money, 1) },
+    { folding: 2, value: handleFodingToMoney(money, 2) },
+    { folding: 3, value: handleFodingToMoney(money, 3) },
+    { folding: 4, value: handleFodingToMoney(money, 4) },
+    { folding: 5, value: handleFodingToMoney(money, 5) },
   ];
 
   return (
@@ -53,10 +54,26 @@ const Foldin: React.FC<StartTradingHandleProps> = ({
           <ul>
             {foldingList?.map((item) => {
               return (
-                <li key={item.folding} className={`mt-2 flex items-center ${foldingCurrent == Number(item.folding) ? "text-green-500 font-bold" : "text-grayTextCT"}`}>
+                <li
+                  key={item.folding}
+                  className={`mt-2 flex items-center ${
+                    folding == item.folding
+                      ? "text-green-500 font-bold"
+                      : "text-grayTextCT"
+                  }`}
+                >
                   <span>Thếp {item.folding} :</span>
-                  <span className="ml-2"> {handleParseFloat2(handleFodingToMoney(money, Number(item.folding)))} $</span>
-                  {isTrade && foldingCurrent == Number(item.folding) && <span><IconLoading size={7} /></span>}
+                  <span className="ml-2">
+                    {handleParseFloat2(
+                      handleFodingToMoney(money, item.folding)
+                    )}
+                    $
+                  </span>
+                  {isTrade && foldingCurrent == item.folding && (
+                    <span>
+                      <IconLoading size={7} />
+                    </span>
+                  )}
                 </li>
               );
             })}
@@ -64,7 +81,11 @@ const Foldin: React.FC<StartTradingHandleProps> = ({
           <div className="mt-2">
             <span>Tổng dự kiến:</span>
             <span className="text-red-500 ml-3">
-              {handleParseFloat2(foldingList.reduce((total, item) => total + item.value, 0), 4)}$
+              {handleParseFloat2(
+                foldingList.reduce((total, item) => total + item.value, 0),
+                4
+              )}
+              $
             </span>
           </div>
         </div>
@@ -73,4 +94,4 @@ const Foldin: React.FC<StartTradingHandleProps> = ({
   );
 };
 
-export default Foldin;
+export default Folding;

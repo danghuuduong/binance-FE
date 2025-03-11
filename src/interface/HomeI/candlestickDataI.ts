@@ -15,6 +15,8 @@ interface CandlestickDataI {
   timeBinance?: string;
   messenger?: string;
   isWaitingForCompletionStatus?: boolean
+  positions?: any
+  openOrders?: any
 }
 
 interface SocketMessageI {

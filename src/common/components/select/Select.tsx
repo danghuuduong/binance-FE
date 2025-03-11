@@ -1,12 +1,18 @@
 interface SelectProps {
-  options: string[];
-  value: string;
-  onChange: (value: string) => void;
+  options: number[];
+  value: number;
+  onChange: (value: number) => void;
   cl?: string;
-  disabled?: boolean
+  disabled?: boolean;
 }
 
-const Select: React.FC<SelectProps> = ({ options, value, onChange, cl, disabled = false }) => {
+const Select: React.FC<SelectProps> = ({
+  options,
+  value,
+  onChange,
+  cl,
+  disabled = false,
+}) => {
   return (
     <form className="inline-block ml-3">
       <select
@@ -14,7 +20,7 @@ const Select: React.FC<SelectProps> = ({ options, value, onChange, cl, disabled 
         id="time-interval-select"
         className={`rounded-md px-1 focus:outline-none bg-slate-500 translate-y-0.5 border-none cursor-pointer ${cl} text-whiteCT`}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange(Number(e.target.value))}
       >
         {options.map((interval) => (
           <option key={interval} value={interval}>
