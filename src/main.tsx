@@ -10,8 +10,9 @@ import {
 } from "react-router-dom";
 import { ContextWrap } from "./context/FoodContext.tsx";
 import OderHistory from "./component/page/oderHistory/oderHistory.tsx";
-import LineChartHome from "./component/page/home/homeRow2/LineChartHome.tsx";
 import EmaCrossHistory from "./component/page/emaCrossHistory/EmaCrossHistory.tsx";
+import Register from "./component/auth/register/Register.tsx";
+import Login from "./component/auth/login/Login.tsx";
 
 
 const router = createBrowserRouter([
@@ -33,11 +34,19 @@ const router = createBrowserRouter([
             <EmaCrossHistory />
           </div>
       },
+
+      {
+        path: "/register",
+        element: <Register />
+      },
+
+      {
+        path: "/login",
+        element: <Login />
+      },
+
+
     ],
-  },
-  {
-    path: "/ss",
-    element: <div>ss</div>,
   },
 ]);
 

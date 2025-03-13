@@ -5,10 +5,12 @@ const MainLayout = () => {
   return (
     <>
       <Header />
-      <div className="px-3 2xl:w-full mx-auto xxl:w-[80%]">
+      <div className="2xl:w-full mx-auto">
         <Outlet />
       </div>
-      <div>Footer</div>
+      <div className="h-[64px] flex items-center justify-center bg-gray-800 text-white">
+        Footer
+      </div>
     </>
   );
 };

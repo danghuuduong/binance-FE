@@ -10,7 +10,6 @@ const RealTimeSocket: React.FC = () => {
   const [data, setData] = useState<CandlestickDataI | null>(null);
   // const [socket, setSocket] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const isendApi = React.useRef(false);
 
   useEffect(() => {
     setIsLoading(true);

@@ -5,12 +5,14 @@ import {
 } from "../interface/FoodContext/foodContext";
 import { useAmountHistoryChangeApi } from "../hooks/useAmountHistoryChangeApi";
 import { dataUSDI } from "../interface/HomeI/StartTradingHomeI/StartTradingHomeType";
+import { useCheckInterFace } from "../hooks/useCheckInterFace";
 
 const ThemeContext = createContext<FoodContextI>(null!);
 
 const ContextWrap = ({ children }: FoodProviderPropsI) => {
   //API
   const { data: largestMoneyApi, isLoading: isLoadingMount, error, refetch: fetchAmountData } = useAmountHistoryChangeApi();
+  const { data: dataInterface, } = useCheckInterFace();
   // State
   const [foldingCurrent, setFoldingCurrent] = useState<number>(1);
   const [isTrade, setIsTrade] = useState<boolean>(false);

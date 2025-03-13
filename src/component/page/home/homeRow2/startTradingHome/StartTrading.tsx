@@ -13,16 +13,17 @@ import axios from "axios";
 import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
 import { getStartTrading } from "../../../../../interface/HomeI/StartTradingHomeI/StartTradingHomeType";
 import ResultTradingfromApi from "./ResultTradingfromApi";
+import { useNavigate } from "react-router-dom";
 
 const optionsChicken: number[] = [10, 20, 30, 50];
 
 const StartTrading: React.FC = () => {
   const [chicken, setChicken] = useState<number>(10);
   const [isModal, setIsModal] = useState(false);
+  const [isModalLogin, setIsModalLogin] = useState(false);
   const [resultSttatusTrading, setResultSttatusTrading] = useState<getStartTrading | null>(null);
   const { usdcurrent } = useContext(ThemeContext);
-
-  console.log("resultSttatusTrading", resultSttatusTrading);
+  const navigate = useNavigate();
 
   const setInitStartTrading = async () => {
     try {
@@ -91,6 +92,15 @@ const StartTrading: React.FC = () => {
       !resultSttatusTrading?.isActiveExecuteTrade
     ) {
       startTrading();
+    }
+  };
+
+  const handleButtonStart = () => {
+    const isCheckInterfake = false
+    if (isCheckInterfake) {
+      setIsModal(true)
+    } else {
+      setIsModalLogin(true)
     }
   };
 
@@ -186,7 +196,7 @@ const StartTrading: React.FC = () => {
                   ? "bg-red-300 hover:bg-red-700"
                   : "bg-yellowCT hover:bg-yellow-200 "
                   } text-grayInButtonYellow`}
-                onClick={() => setIsModal(true)}
+                onClick={() => handleButtonStart()}
               >
                 {resultSttatusTrading?.isTrading && (
                   <span className="relative flex h-7 w-7 ml-2 translate-y-0.5 translate-x-3">
@@ -225,6 +235,19 @@ const StartTrading: React.FC = () => {
           />
         </Modal>
       )}
+
+      {isModalLogin && (
+        <Modal
+          closeModal={() => setIsModalLogin(false)}
+          confirmModal={() => navigate("/login")}
+          title={"Vui lòng đăng nhập, trước khi bắt đầu!"}
+          classCT={"bg-yellowCT text-gray-600"}
+          textOK={"Đăng nhập"}
+        >
+          <></>
+        </Modal >
+      )}
+
     </>
   );
 };

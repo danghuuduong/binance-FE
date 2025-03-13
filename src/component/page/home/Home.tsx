@@ -6,7 +6,7 @@ import RealTimeSocket from "./homeRow1/RealTimeSocket";
 
 const Home: React.FC = () => {
   return (
-    <>
+    <div className="mx-3 mb-2">
       <div className="grid grid-cols-12 gap-2 mt-2">
         <div className="col-span-9 bg-grayCT rounded-lg p-4 mt-2">
           <TradingViewWidget />
@@ -28,7 +28,7 @@ const Home: React.FC = () => {
           <LineChartHome />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
