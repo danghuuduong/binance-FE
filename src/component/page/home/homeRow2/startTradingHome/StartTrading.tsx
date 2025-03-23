@@ -22,7 +22,7 @@ const StartTrading: React.FC = () => {
   const [resultSttatusTrading, setResultSttatusTrading] = useState<getStartTrading | null>(null);
   const { usdcurrent } = useContext(ThemeContext);
 
-  console.log("resultSttatusTrading", resultSttatusTrading);
+  console.log("resultSttatusTusdcurrentrading", usdcurrent);
 
   const setInitStartTrading = async () => {
     try {
@@ -125,15 +125,12 @@ const StartTrading: React.FC = () => {
           );
           response.status === 200 && getStartTrading();
           alert(
-            `đã vào lệnh :${moneyfodingOne} khoảng : ${amount} BTC và ${khoiluong} khối lượng ,với số tiền ${moneyfodingOne}`
+            `đã vào lệnh :${moneyfodingOne} khoảng : ${amount} BTC và ${largestMoney} phải lơn`
           );
         } else {
           alert(
-            `Số tiền phải lớn hơn ${handleParseFloat2(
-              0.003 * 1000
-            )}$ và khối lượng là 269 $.\n Hiện tại Số tiền là : ${handleParseFloat2(
-              moneyfodingOne
-            )} khối lượng dự kiến là:${handleParseFloat2(khoiluong)} `
+            ` - Số tiền phải lớn hơn 3$ .\n - Tổng số tiền dự kiến phải cao hơn 137$\n - Số dư tài khoản phải đủ 137$
+           `
           );
         }
       } catch (error) {

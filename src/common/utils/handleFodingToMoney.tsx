@@ -1,6 +1,8 @@
 // Hàm định dạng giá trị số với dấu phẩy (,) và dấu chấm (.)
 const handleFodingToMoney = (mony: string | number, foldingCurrent: number): number => {
-  const foldingOne = (Number(mony) * 2.2) / 100;
+  console.log("mony",mony);
+  
+  const foldingOne = (Number(mony) * 4.5) / 100;
   switch (foldingCurrent) {
     case 1:
       return foldingOne;
@@ -10,8 +12,6 @@ const handleFodingToMoney = (mony: string | number, foldingCurrent: number): num
       return foldingOne * 5.5;
     case 4:
       return foldingOne * 12;
-    case 5:
-      return foldingOne * 23.5;
     default:
       return 0;
   }

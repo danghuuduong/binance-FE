@@ -25,7 +25,6 @@ const Folding: React.FC<StartTradingHandleProps> = ({
     { folding: 2, value: handleFodingToMoney(money, 2) },
     { folding: 3, value: handleFodingToMoney(money, 3) },
     { folding: 4, value: handleFodingToMoney(money, 4) },
-    { folding: 5, value: handleFodingToMoney(money, 5) },
   ];
 
 
@@ -102,8 +101,7 @@ const Folding: React.FC<StartTradingHandleProps> = ({
             <span>Tổng dự kiến:</span>
             <span className="text-red-500 ml-3">
               {handleParseFloat2(
-                foldingList.reduce((total, item) => total + item.value, 0),
-                4
+                foldingList.reduce((total, item) => total + item.value, 0),4
               )}
               $
             </span>

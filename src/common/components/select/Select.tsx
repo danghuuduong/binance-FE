@@ -21,7 +21,7 @@ const Select: React.FC<SelectProps> = ({
   return (
     <form className="inline-block ml-3">
       <select
-        // disabled={disabled}
+        disabled={disabled}
         id="time-interval-select"
         className={`rounded-md px-1 focus:outline-none bg-slate-600 translate-y-0.5 border-none cursor-pointer ${cl} text-whiteCT font-medium`}
         value={value}
@@ -29,8 +29,8 @@ const Select: React.FC<SelectProps> = ({
       >
         {options.map((interval) => {
           const largestMoney = resultSttatusTrading?.largestMoney || 0
-          const isDisbledItem30 = largestMoney > 1000 && interval === 30
-          const isDisbledItem50 = largestMoney > 500  && interval === 50
+          const isDisbledItem30 = largestMoney > 1500 && interval === 30
+          const isDisbledItem50 = largestMoney > 1000  && interval === 50
           const isDisbledItem = isDisbledItem30 || isDisbledItem50
           
           return <option
