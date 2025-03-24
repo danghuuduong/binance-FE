@@ -24,7 +24,6 @@ const Folding: React.FC<StartTradingHandleProps> = ({
     { folding: 1, value: handleFodingToMoney(money, 1) },
     { folding: 2, value: handleFodingToMoney(money, 2) },
     { folding: 3, value: handleFodingToMoney(money, 3) },
-    { folding: 4, value: handleFodingToMoney(money, 4) },
   ];
 
 

@@ -2,7 +2,7 @@
 const handleFodingToMoney = (mony: string | number, foldingCurrent: number): number => {
   console.log("mony",mony);
   
-  const foldingOne = (Number(mony) * 4.5) / 100;
+  const foldingOne = (Number(mony) * 11) / 100;
   switch (foldingCurrent) {
     case 1:
       return foldingOne;
@@ -10,8 +10,6 @@ const handleFodingToMoney = (mony: string | number, foldingCurrent: number): num
       return foldingOne * 2.5;
     case 3:
       return foldingOne * 5.5;
-    case 4:
-      return foldingOne * 12;
     default:
       return 0;
   }

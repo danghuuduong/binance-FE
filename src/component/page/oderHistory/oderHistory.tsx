@@ -73,7 +73,7 @@ const OderHistory: React.FC = () => {
 
                   <td className="px-6 py-4">$ - {value.info.commission}</td>
 
-                  <td className="px-6 py-4">{value.info.realizedPnl}</td>
+                  <td className={`px-6 py-4 ${value.info.realizedPnl > 0 &&  "text-green-500" }  ${value.info.realizedPnl < 0 &&  "text-red-500" }`}>{value.info.realizedPnl} $</td>
                 </tr>
               );
             })}
