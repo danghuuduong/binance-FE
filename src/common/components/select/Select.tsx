@@ -29,9 +29,15 @@ const Select: React.FC<SelectProps> = ({
       >
         {options.map((interval) => {
           const largestMoney = resultSttatusTrading?.largestMoney || 0
-          const isDisbledItem30 = largestMoney > 1500 && interval === 30
-          const isDisbledItem50 = largestMoney > 1000  && interval === 50
-          const isDisbledItem = isDisbledItem30 || isDisbledItem50
+
+          const isDisbledItem20 = largestMoney > 4999 && interval === 20
+          const isDisbledItem25 = largestMoney > 1999 && interval === 25
+          const isDisbledItem30 = largestMoney > 1299 && interval === 30
+          const isDisbledItem35 = largestMoney > 999 && interval === 35
+          const isDisbledItem40 = largestMoney > 999 && interval === 40
+          const isDisbledItem45 = largestMoney > 999 && interval === 45
+          const isDisbledItem50 = largestMoney > 999  && interval === 50
+          const isDisbledItem = isDisbledItem20 || isDisbledItem25 || isDisbledItem30 || isDisbledItem50 || isDisbledItem35 || isDisbledItem40 || isDisbledItem45
           
           return <option
             key={interval}

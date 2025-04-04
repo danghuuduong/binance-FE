@@ -54,8 +54,10 @@ const Folding: React.FC<StartTradingHandleProps> = ({
             textCancel="Đóng"
           >
             <div className="text-align">
-              <div>1. Trên 500 $ sẽ không được chọn 50% nữa </div>
-              <div>2. Trên 1000 $ sẽ không được chọn 30% nữa </div>
+              <div>1. 1000 $ sẽ không được chọn 35% đến 50% nữa </div>
+              <div>2. 1300 $ sẽ không được chọn 30% đến 50% nữa </div>
+              <div>3. 2000 $ sẽ không được chọn 25% đến 50% nữa </div>
+              <div>4. 5000 $ sẽ không được chọn 20% đến 50% nữa </div>
             </div>
           </Modal>
         }

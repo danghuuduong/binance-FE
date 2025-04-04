@@ -10,7 +10,6 @@ const OderHistory: React.FC = () => {
   } = useOrderHistoryApi();
 
   const dataTRadess = data?.reversedtrades;
-  console.log("dataTRadess", dataTRadess);
 
   return (
     <div className="h-[100%]">

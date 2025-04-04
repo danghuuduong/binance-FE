@@ -28,7 +28,6 @@ const InfoUserTrading: React.FC = () => {
         }
       } catch (error) {
         setIsLoading(false)
-        console.log("Error fetching candlestick data:", error);
       }
     };
 

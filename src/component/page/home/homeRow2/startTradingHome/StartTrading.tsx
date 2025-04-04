@@ -10,19 +10,16 @@ import Folding from "./Folding";
 import Infomation from "./Infomation";
 import { handleFodingToMoney } from "../../../../../common/utils/handleFodingToMoney";
 import axios from "axios";
-import { handleParseFloat2 } from "../../../../../common/utils/handleParseInt";
 import { getStartTrading } from "../../../../../interface/HomeI/StartTradingHomeI/StartTradingHomeType";
 import ResultTradingfromApi from "./ResultTradingfromApi";
 
-const optionsChicken: number[] = [10, 20, 30, 50];
+const optionsChicken: number[] = [1, 3, 5, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30, 35, 40, 45, 50];
 
 const StartTrading: React.FC = () => {
-  const [chicken, setChicken] = useState<number>(10);
+  const [chicken, setChicken] = useState<number>(1);
   const [isModal, setIsModal] = useState(false);
   const [resultSttatusTrading, setResultSttatusTrading] = useState<getStartTrading | null>(null);
   const { usdcurrent } = useContext(ThemeContext);
-
-  console.log("resultSttatusTusdcurrentrading", usdcurrent);
 
   const setInitStartTrading = async () => {
     try {
@@ -96,48 +93,41 @@ const StartTrading: React.FC = () => {
 
   const startTrading = async () => {
     if (resultSttatusTrading?._id) {
-      try {
-        const moneyfodingOne = handleFodingToMoney(totalAmount, 1);
-        const giabtc = await axios.get(
-          "https://testnet.binance.vision/api/v3/ticker/price",
-          {
-            params: {
-              symbol: "BTCUSDT", // BTC/USDT pair
-            },
-          }
-        );
+      const moneyfodingOne = handleFodingToMoney(totalAmount, 1);
+      const amount = moneyfodingOne / 800; // 0.0024
 
-        const btcPrice = giabtc.data.price;
-        const amount = moneyfodingOne / 1000; // 0.002
-
-        const khoiluong = amount * btcPrice;
-
-        if (amount >= 0.003 && khoiluong > 269) {
-          const payload = {
-            isTrading: true,
-            tradeRate: Number(chicken),
-            moneyfodingOne,
-            totalAmount,
-          };
+      if (amount >= 0.004) {
+        const payload = {
+          isTrading: true,
+          tradeRate: Number(chicken),
+          moneyfodingOne,
+          totalAmount,
+        };
+        try {
           const response = await api.put(
             `status/${resultSttatusTrading?._id.toString()}`,
             payload
           );
           response.status === 200 && getStartTrading();
+
           alert(
             `đã vào lệnh :${moneyfodingOne} khoảng : ${amount} BTC và ${largestMoney} phải lơn`
           );
-        } else {
-          alert(
-            ` - Số tiền phải lớn hơn 3$ .\n - Tổng số tiền dự kiến phải cao hơn 137$\n - Số dư tài khoản phải đủ 137$
-           `
-          );
+
+        } catch (error) {
+          alert(`API : Start Đang có vấn đề, vui lòng thử lại`);
         }
-      } catch (error) {
-        alert(`Start Thất bại`);
+
+
+      } else {
+        alert(
+          ` - Số tiền phải lớn hơn 3$ .\n - Tổng số tiền dự kiến phải cao hơn 137$\n - Số dư tài khoản phải đủ 137$
+           `
+        );
       }
+
     } else {
-      alert(`Start Thất bại`);
+      alert(`Start lỗi, Hãy liên hệ Hữu Dương zalo: 0986442833`);
     }
   };
 
